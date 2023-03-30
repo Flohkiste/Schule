@@ -5,6 +5,11 @@ public class Board {
                         "4", "5", "6",
                         "7", "8", "9" };
 
+    public Board(){
+        drawBoard();
+    }
+
+
     //function to print / draw the board in the Commandline
     public void drawBoard(){
         for(int i = 0; i < 9; i++){
@@ -17,6 +22,12 @@ public class Board {
 
         }
     }
+
+    public void makeTurn(String player, int field){
+        fields[field-1] = player;
+        drawBoard();
+    }
+
 
     //function to check if somebody won the Game
     public boolean checkWin(){
