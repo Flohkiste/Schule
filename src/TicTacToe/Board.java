@@ -5,7 +5,8 @@ public class Board {
                         "4", "5", "6",
                         "7", "8", "9" };
 
-    public void draw(){
+    //function to print / draw the board in the Commandline
+    public void drawBoard(){
         for(int i = 0; i < 9; i++){
             System.out.print(fields[i]);
             if(i == 2 | i == 5 | i == 8){
