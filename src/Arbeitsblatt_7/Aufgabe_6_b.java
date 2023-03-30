@@ -1,4 +1,4 @@
-package Arbeitsplatt_7;
+package Arbeitsblatt_7;
 
 import java.util.Scanner;
 
