@@ -2,9 +2,11 @@ package TicTacToe;
 
 import java.util.Scanner;
 
-public class Board {
+public class Game {
 
     boolean currentPlayer = false;
+    int turns = 0;
+    int result;
     boolean gameRunning = true;
     int playerMove;
     Scanner scanner = new Scanner(System.in);
@@ -13,7 +15,7 @@ public class Board {
                         "4", "5", "6",
                         "7", "8", "9" };
 
-    public void playerInput(){
+    private void playerInput(){
         while (gameRunning){
             playerMove = scanner.nextInt();
             if(playerMove < 1 | playerMove > 9){
@@ -27,36 +29,48 @@ public class Board {
 
     }
 
-    public void checkField(){
+    private void checkField(){
         if(fields[playerMove-1].equals("X") | fields[playerMove-1].equals("O")){
             System.out.println("Feld schon belegt bitte wähl ein freies!");
             playerInput();
         }
     }
 
+    private void reset(){
+        currentPlayer = false;
+        turns = 0;
+        gameRunning = true;
+        for (int x = 0; x < 9; x++){
+            fields[x] = String.valueOf(x+1);
+        }
+    }
 
-    public void gameLoop(){
+
+    public int gameLoop(){
+        reset();
         drawBoard();
 
         while (gameRunning){
             playerInput();
-            makeTurn(playerMove-1);
-            checkWin();
-            drawBoard();
+            makeTurn(playerMove);
             if (currentPlayer){
                 currentPlayer = false;
             } else {
                 currentPlayer = true;
             }
 
+            System.out.println("\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n");
+            drawBoard();
+            turns ++;
 
         }
+        return result;
 
     }
 
 
     //function to print / draw the board in the Commandline
-    public void drawBoard(){
+    private void drawBoard(){
         for(int i = 0; i < 9; i++){
             System.out.print(fields[i]);
             if(i == 2 | i == 5 | i == 8){
@@ -65,23 +79,25 @@ public class Board {
                 System.out.print("|");
             }
 
-        }
 
-        if (currentPlayer){
-            System.out.println("O to make a move");
-        } else {
-            System.out.println("X to make a move");
+        }
+        if (checkWin() == false){
+            if (currentPlayer){
+                System.out.println("O to make a move");
+            } else {
+                System.out.println("X to make a move");
+            }
         }
 
     }
 
-    public void makeTurn(int field){
+    private void makeTurn(int field){
         if (currentPlayer){
-            fields[field-1] = "X";
-        } else {
             fields[field-1] = "O";
+        } else {
+            fields[field-1] = "X";
         }
-        drawBoard();
+
     }
 
 
@@ -89,11 +105,18 @@ public class Board {
     public boolean checkWin(){
         if((fields[0].equals("X") & fields[1].equals("X") & fields[2].equals("X")) | (fields[0].equals("X") & fields[3].equals("X") & fields[6].equals("X")) | (fields[0].equals("X") & fields[4].equals("X") & fields[8].equals("X")) | (fields[1].equals("X") & fields[4].equals("X") & fields[7].equals("X")) | (fields[2].equals("X") & fields[5].equals("X") & fields[8].equals("X")) | (fields[3].equals("X") & fields[4].equals("X") & fields[5].equals("X")) | (fields[6].equals("X") & fields[7].equals("X") & fields[8].equals("X")) | (fields[2].equals("X") & fields[4].equals("X") & fields[6].equals("X"))){
             System.out.println("X hat gewonnen!!!");
+            result = 0;
             gameRunning = false;
             return true;
         }else if((fields[0].equals("O") & fields[1].equals("O") & fields[2].equals("O")) | (fields[0].equals("O") & fields[3].equals("O") & fields[6].equals("O")) | (fields[0].equals("O") & fields[4].equals("O") & fields[8].equals("O")) | (fields[1].equals("O") & fields[4].equals("O") & fields[7].equals("O")) | (fields[2].equals("O") & fields[5].equals("O") & fields[8].equals("O")) | (fields[3].equals("O") & fields[4].equals("O") & fields[5].equals("O")) | (fields[6].equals("O") & fields[7].equals("O") & fields[8].equals("O")) | (fields[2].equals("O") & fields[4].equals("O") & fields[6].equals("O"))){
-            System.out.println("Y hat gewonnen!!!");
-            gameRunning = true;
+            System.out.println("O hat gewonnen!!!");
+            gameRunning = false;
+            result = 1;
+            return true;
+        }else if (turns >= 8){
+            System.out.println("Unentschieden!!!");
+            gameRunning = false;
+            result = 2;
             return true;
         }else {
             return false;
