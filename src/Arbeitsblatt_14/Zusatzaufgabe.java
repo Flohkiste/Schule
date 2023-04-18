@@ -2,7 +2,7 @@ package Arbeitsblatt_14;
 
 import java.util.Scanner;
 
-public class Zusatuaufgabe {
+public class Zusatzaufgabe {
     public static void main(String[] args){
         Scanner scanner = new Scanner(System.in);
         boolean isPalindrom = false;
