@@ -9,10 +9,9 @@ public class Aufgabe_4 {
 
         System.out.print("Bitte geben Sie ihr Wort ein: ");
         String word = scanner.next();
-        String lowerword = word.toLowerCase();
 
-        for(int x = 0; x < lowerword.length(); x++){
-            if(lowerword.charAt(x) == lowerword.charAt(lowerword.length()-x-1)){
+        for(int x = 0; x < word.length(); x++){
+            if(word.charAt(x) == word.charAt(word.length()-x-1)){
                 isPalindrom = true;
             } else {
                 isPalindrom = false;
