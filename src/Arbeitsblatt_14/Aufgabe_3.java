@@ -36,9 +36,9 @@ public class Aufgabe_3 {
 
     private static boolean lenght(String stringToBeChecked) {
     if(stringToBeChecked.length() >= 10) {
-    return true;
+        return true;
     } else {
-    return false;
+        return false;
     }
     }
 }
