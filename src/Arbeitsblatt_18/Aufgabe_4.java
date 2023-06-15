@@ -9,13 +9,7 @@ public class Aufgabe_4 {
 	}
 	
 	public static double potenz(double basis, double exponent) {
-		double ergebnis = 0;
-		for(int x=1; x < exponent; x++) {
-			ergebnis = basis * basis;
-		}
-		if(exponent == 0) {
-			ergebnis = 1;
-		}
+		double ergebnis = Math.pow(basis,exponent);
 		
 		return ergebnis;
 	}
