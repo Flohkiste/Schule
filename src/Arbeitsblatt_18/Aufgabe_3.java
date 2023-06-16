@@ -1,4 +1,3 @@
-package Arbeitsblatt_18;
 import java.util.Scanner;
 public class Aufgabe_3 {
 	public static Scanner scanner = new Scanner(System.in);
