@@ -32,6 +32,30 @@ public class flaechenberechnung {
 		int h = sc.nextInt();
 		System.out.println("Fläche Dreieck: " + (g * h) / 2);
 	}
+
+	public static void flaeche_kreis() {
+		System.out.println("Fläche des Kreises: ");
+		System.out.print("Bitte länge des Radius r eingeben: ");
+		int r = sc.nextInt();
+		System.out.println("Fläche Kreis: " + Math.PI * r * r);
+	}
+
+	public static void flaeche_quadrat() {
+		System.out.println("Fläche des Quadrats: ");
+		System.out.print("Bitte länge der Seite a eingeben: ");
+		int a = sc.nextInt();
+		System.out.println("Fläche Quadrat: " + a * a);
+	}
+
+	//volumen einer pyramide
+	public static void volumen_pyramide() {
+		System.out.println("Volumen der Pyramide: ");
+		System.out.print("Bitte länge der Grundseite g eingeben: ");
+		int g = sc.nextInt();
+		System.out.print("Bitte länge der Höhe h eingeben: ");
+		int h = sc.nextInt();
+		System.out.println("Volumen Pyramide: " + (g * h) / 3);
+	}
 	
 
 }

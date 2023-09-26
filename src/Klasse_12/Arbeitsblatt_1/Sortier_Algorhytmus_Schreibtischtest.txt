@@ -1,0 +1,87 @@
+Programm Beispiel3:
+    daten = [9, 5, 1, 3, 4]
+    
+    i=0
+    0 <= 4
+        einzufuegen = 9
+        index = 0
+
+        0 > 0 & 9 < daten[index - 1]
+
+        daten = [9, 5, 1, 3, 4]
+
+        daten[0] = 9
+
+        i++
+    
+    1 <= 4
+        einzufuegen = 5
+        index = 1
+        
+        1 > 0 & 5 < 9
+            daten[1] = 9    //[9, 9, 1, 3, 4]
+            index --        //0
+
+        0 > 0 & 5 < daten[index - 1]
+
+        daten[0] = 5        //[5, 9, 1, 3, 4]
+
+        i++ //2
+
+    2 <= 4
+        einzufuegen = 1 
+        index = 2
+
+        2 > 0 & 1 < 9
+            daten[2] = 9 //[5, 9, 9, 3, 4]
+            index -- //1
+            
+        1 > 0 & 1 < 5
+            daten[1] = 5 //[5, 5, 9, 3, 4]
+            index -- //0
+
+        0 > 0
+
+        daten[0] = 1    //[1, 5, 9, 3, 4]
+
+        i++ //3
+
+    3 <= 4
+        einzufuegen = 3
+        index = 3
+
+        3 > 0 & 3 < 9
+            daten[3] = 9    //[1, 5, 9, 9, 4]
+            index --    //2
+
+        2 > 0 & 3 < 5
+            daten[2] = 5 //[1, 5, 5, 9, 4]
+            index -- //1
+
+        1 > 0 & 3 < 1
+
+        daten[1] = 3 //[1, 3, 5, 9, 4]
+
+        i++ //4
+
+    4 <= 4
+        einzufuegen = 4
+        index = 4
+
+        4 > 0 & 4 < 9
+            daten[4] = 9    //[1, 3, 5, 9, 9]
+            index --    //3
+
+        3 > 0 & 4 < 5
+            daten[3] = 5    //[1, 3, 5, 5, 9]
+            index -- //2
+
+        2 > 0 & 4 < 3
+
+        daten[2] = 4        //[1, 3, 4, 5, 9]
+
+        i++
+
+    5 <= 4
+
+    Ende Programm
