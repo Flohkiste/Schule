@@ -6,36 +6,34 @@ public class Sortieralgorithmen {
     public static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args){
-        int auswahl;
-        boolean fertig = false;
+        System.out.println("1. Bubblesort");
+        System.out.println("2. Insertion Algorithmus");
+        System.out.println("3. Selection Sort Algorithmus");
+        System.out.println("4. Bubblesort Zwischenschritte");
+        System.out.println("5. Programm beenden");
+        System.out.print("Bitte wählen Sie: ");
+        int auswahl = sc.nextInt();
 
-        while(!fertig){
-            System.out.println("1: Bubblesort");
-            System.out.println("2: Insertion Algorithmus");
-            System.out.println("3: Selection Sort Algorithmus");
-            System.out.println("4: Beenden");
-            System.out.print("Bitte wählen Sie: ");
-            auswahl = sc.nextInt();
-
-            switch(auswahl){
-                case 1:
-                    bubblesort();
-                    break;
-                case 2:
-                    insertionAlgorithmus();
-                    break;
-                case 3:
-                    selectionSortAlgorithmus();
-                    break;
-                case 4:
-                    fertig = true;
-                    break;
-                default:
-                    System.out.println("Falsche Eingabe!");
-                    break;
-            }
+        switch(auswahl){
+            case 1:
+                bubblesort();
+                break;
+            case 2:
+                insertionAlgorithmus();
+                break;
+            case 3:
+                selectionSortAlgorithmus();
+                break;
+            case 4:
+                bubblesortZwischenschritte();
+                break;
+            case 5:
+                System.out.println("Programm wird beendet");
+                break;
+            default:
+                System.out.println("Falsche Eingabe");
+                break;
         }
-
     }
 
 
@@ -65,6 +63,9 @@ public class Sortieralgorithmen {
                     feld[i] = feld[i + 1];
                     feld[i + 1] = zahl;
                     fertig = false;
+                    
+
+
                 }
             }
             j--;
@@ -133,5 +134,49 @@ public class Sortieralgorithmen {
             System.out.print(zahlen[i] + " ");
         }
         System.out.println();
+    }
+
+        public static void bubblesortZwischenschritte(){
+        boolean fertig;
+        int j;
+        int anz;
+        int zahl;
+        System.out.print("Bitte geben Sie die Anzahl der Zahlen ein: ");
+        anz = sc.nextInt();
+
+        int[] feld = new int[anz];
+
+        for(int i = 0; i < anz; i++){
+            System.out.print("Bitte geben Sie die " + (i + 1) + ". Zahl ein: ");
+            feld[i] = sc.nextInt();
+        }
+
+        fertig = false;
+        j = anz - 2;
+
+        while(!fertig){
+            fertig = true;
+            for(int i = 0; i <= j; i++){
+                if(feld[i] > feld[i + 1]){
+                    zahl = feld[i];
+                    feld[i] = feld[i + 1];
+                    feld[i + 1] = zahl;
+                    fertig = false;
+                    
+                    for(int k = 0; k < anz; k++){
+                        System.out.print(feld[k] + " | ");
+                    }
+                    System.out.println();
+
+                }
+            }
+            j--;
+        }
+
+        for(int i = 0; i < anz; i++){
+            System.out.print(feld[i] + " ");
+        }
+        System.out.println();
+
     }
 }
