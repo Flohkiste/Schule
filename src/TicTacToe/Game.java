@@ -83,9 +83,9 @@ public class Game {
         }
         if (checkWin() == false){
             if (currentPlayer){
-                System.out.println("O to make a move");
+                System.out.println(coloredO() + " to make a move");
             } else {
-                System.out.println("X to make a move");
+                System.out.println(coloredX() + " to make a move");
             }
         }
 
@@ -93,9 +93,9 @@ public class Game {
 
     private void makeTurn(int field){
         if (currentPlayer){
-            fields[field-1] = "O";
+            fields[field-1] = coloredO();
         } else {
-            fields[field-1] = "X";
+            fields[field-1] = coloredX();
         }
 
     }
@@ -103,13 +103,13 @@ public class Game {
 
     //function to check if somebody won the Game
     public boolean checkWin(){
-        if((fields[0].equals("X") & fields[1].equals("X") & fields[2].equals("X")) | (fields[0].equals("X") & fields[3].equals("X") & fields[6].equals("X")) | (fields[0].equals("X") & fields[4].equals("X") & fields[8].equals("X")) | (fields[1].equals("X") & fields[4].equals("X") & fields[7].equals("X")) | (fields[2].equals("X") & fields[5].equals("X") & fields[8].equals("X")) | (fields[3].equals("X") & fields[4].equals("X") & fields[5].equals("X")) | (fields[6].equals("X") & fields[7].equals("X") & fields[8].equals("X")) | (fields[2].equals("X") & fields[4].equals("X") & fields[6].equals("X"))){
-            System.out.println("X hat gewonnen!!!");
+        if((fields[0].equals(coloredX()) & fields[1].equals(coloredX()) & fields[2].equals(coloredX())) | (fields[0].equals(coloredX()) & fields[3].equals(coloredX()) & fields[6].equals(coloredX())) | (fields[0].equals(coloredX()) & fields[4].equals(coloredX()) & fields[8].equals(coloredX())) | (fields[1].equals(coloredX()) & fields[4].equals(coloredX()) & fields[7].equals(coloredX())) | (fields[2].equals(coloredX()) & fields[5].equals(coloredX()) & fields[8].equals(coloredX())) | (fields[3].equals(coloredX()) & fields[4].equals(coloredX()) & fields[5].equals(coloredX())) | (fields[6].equals(coloredX()) & fields[7].equals(coloredX()) & fields[8].equals(coloredX())) | (fields[2].equals(coloredX()) & fields[4].equals(coloredX()) & fields[6].equals(coloredX()))){
+            System.out.println(coloredX() + " hat gewonnen!!!");
             result = 0;
             gameRunning = false;
             return true;
-        }else if((fields[0].equals("O") & fields[1].equals("O") & fields[2].equals("O")) | (fields[0].equals("O") & fields[3].equals("O") & fields[6].equals("O")) | (fields[0].equals("O") & fields[4].equals("O") & fields[8].equals("O")) | (fields[1].equals("O") & fields[4].equals("O") & fields[7].equals("O")) | (fields[2].equals("O") & fields[5].equals("O") & fields[8].equals("O")) | (fields[3].equals("O") & fields[4].equals("O") & fields[5].equals("O")) | (fields[6].equals("O") & fields[7].equals("O") & fields[8].equals("O")) | (fields[2].equals("O") & fields[4].equals("O") & fields[6].equals("O"))){
-            System.out.println("O hat gewonnen!!!");
+        } else if((fields[0].equals(coloredO()) & fields[1].equals(coloredO()) & fields[2].equals(coloredO())) | (fields[0].equals(coloredO()) & fields[3].equals(coloredO()) & fields[6].equals(coloredO())) | (fields[0].equals(coloredO()) & fields[4].equals(coloredO()) & fields[8].equals(coloredO())) | (fields[1].equals(coloredO()) & fields[4].equals(coloredO()) & fields[7].equals(coloredO())) | (fields[2].equals(coloredO()) & fields[5].equals(coloredO()) & fields[8].equals(coloredO())) | (fields[3].equals(coloredO()) & fields[4].equals(coloredO()) & fields[5].equals(coloredO())) | (fields[6].equals(coloredO()) & fields[7].equals(coloredO()) & fields[8].equals(coloredO())) | (fields[2].equals(coloredO()) & fields[4].equals(coloredO()) & fields[6].equals(coloredO()))){
+            System.out.println(coloredO() + " hat gewonnen!!!");
             gameRunning = false;
             result = 1;
             return true;
@@ -121,6 +121,16 @@ public class Game {
         }else {
             return false;
         }
+    }
+
+    public String coloredX(){
+        String x = "\u001B[31mX\u001B[0m";
+        return x;
+    }
+
+    public String coloredO(){
+        String o = "\u001B[34mO\u001B[0m";
+        return o;
     }
 
 

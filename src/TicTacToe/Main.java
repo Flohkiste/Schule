@@ -28,20 +28,20 @@ public class Main {
 
             if (lastGame == 0){
                 x++;
-                System.out.println("X : O");
+                System.out.println(game.coloredX() + " : " + game.coloredO());
                 System.out.println(x + " : " + o);
             }else if (lastGame == 1){
                 o++;
-                System.out.println("X : O");
+                System.out.println(game.coloredX() + " : " + game.coloredO());
                 System.out.println(x + " : " + o);
             }
 
             if (x == gameRounds){
                 gameRunning = false;
-                System.out.println("X hat das Spiel gewonnen!");
+                System.out.println(game.coloredX() + " hat das Spiel gewonnen!");
             } else if (o == gameRounds) {
                 gameRunning = false;
-                System.out.println("O hat das Spiel gewonnen!");
+                System.out.println(game.coloredO() + " hat das Spiel gewonnen!");
             }
 
 
