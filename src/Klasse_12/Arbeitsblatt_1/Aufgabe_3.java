@@ -42,7 +42,7 @@ public class Aufgabe_3 {
         }
     }
  
-    //Schreibe eine Methode welche den Mittelwert einer Menge von Zahlen berechnet und ausgibt.
+
     public static void mittelwert(){
         System.out.print("Gib die Anzahl der Zahlen ein: ");
         int anzahl = sc.nextInt();
