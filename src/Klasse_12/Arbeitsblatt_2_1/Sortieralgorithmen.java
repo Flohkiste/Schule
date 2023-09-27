@@ -6,7 +6,36 @@ public class Sortieralgorithmen {
     public static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args){
-        bubblesort();
+        int auswahl;
+        boolean fertig = false;
+
+        while(!fertig){
+            System.out.println("1: Bubblesort");
+            System.out.println("2: Insertion Algorithmus");
+            System.out.println("3: Selection Sort Algorithmus");
+            System.out.println("4: Beenden");
+            System.out.print("Bitte wählen Sie: ");
+            auswahl = sc.nextInt();
+
+            switch(auswahl){
+                case 1:
+                    bubblesort();
+                    break;
+                case 2:
+                    insertionAlgorithmus();
+                    break;
+                case 3:
+                    selectionSortAlgorithmus();
+                    break;
+                case 4:
+                    fertig = true;
+                    break;
+                default:
+                    System.out.println("Falsche Eingabe!");
+                    break;
+            }
+        }
+
     }
 
 
@@ -41,6 +70,11 @@ public class Sortieralgorithmen {
             j--;
         }
 
+        for(int i = 0; i < anz; i++){
+            System.out.print(feld[i] + " ");
+        }
+        System.out.println();
+
     }
 
     public static void insertionAlgorithmus(){
@@ -73,6 +107,31 @@ public class Sortieralgorithmen {
     }
 
     public static void selectionSortAlgorithmus(){
-        
+        int min;
+        int speicher;
+        System.out.print("Bitte geben Sie die Anzahl der Zahlen ein: ");
+        int[] zahlen = new int[sc.nextInt()];
+
+        for(int i = 0; i < zahlen.length; i++){
+            System.out.print("Bitte geben Sie die " + (i + 1) + ". Zahl ein: ");
+            zahlen[i] = sc.nextInt();
+        }
+
+        for(int j = 0; j < zahlen.length - 1; j++){
+            min = j;
+            for(int i = j + 1; i < zahlen.length; i++){
+                if(zahlen[i] < zahlen[min]){
+                    min = i;
+                }
+            }
+            speicher = zahlen[j];
+            zahlen[j] = zahlen[min];
+            zahlen[min] = speicher;
+        }
+
+        for(int i = 0; i < zahlen.length; i++){
+            System.out.print(zahlen[i] + " ");
+        }
+        System.out.println();
     }
 }
