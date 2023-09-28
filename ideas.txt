@@ -1,0 +1,2 @@
+Ideen:
+-TicTacToe in cmd
