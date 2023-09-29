@@ -13,13 +13,11 @@ public class Game {
             }
         }
 
-        
-
-        drawBoard();
     }
 
-    private void gameLoop() {
-
+    public void gameLoop() {
+        drawBoard();
+        makeMove(currentPlayer, 4);
     }
 
     public void drawBoard() {
@@ -39,8 +37,21 @@ public class Game {
         }
     }
 
-    public void makeMove(){
-        
+    public void makeMove(int player, int column) {
+        for (int x = 0; x < 6; x++) {
+            this.board[x][column] = player;
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            if (x != 0) {
+                this.board[x - 1][column] = 0;
+            }
+            drawBoard();
+        }
     }
 
 }
