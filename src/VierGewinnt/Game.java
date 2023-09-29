@@ -12,15 +12,18 @@ public class Game {
                 board[x][y] = 0;
             }
         }
-
+        drawBoard();
+        makeMove(currentPlayer, 4, 4);
     }
 
     public void gameLoop() {
-        drawBoard();
-        makeMove(currentPlayer, 4);
     }
 
     public void drawBoard() {
+        // clear the console
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+
         System.out.println(
                 "-------------------------------\n|| 1 | 2 | 3 | 4 | 5 | 6 | 7 ||\n-------------------------------");
         for (int x = 0; x < 6; x++) {
@@ -37,8 +40,8 @@ public class Game {
         }
     }
 
-    public void makeMove(int player, int column) {
-        for (int x = 0; x < 6; x++) {
+    public void makeMove(int player, int column, int row) {
+        for (int x = 0; x < row; x++) {
             this.board[x][column] = player;
             try {
                 Thread.sleep(500);
