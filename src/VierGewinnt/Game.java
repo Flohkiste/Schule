@@ -12,8 +12,10 @@ public class Game {
                 board[x][y] = 0;
             }
         }
+        this.board[5][3] = 2;
         drawBoard();
-        makeMove(currentPlayer, 4, 4);
+
+        makeMove(currentPlayer, 3);
     }
 
     public void gameLoop() {
@@ -30,9 +32,11 @@ public class Game {
             System.out.print("||");
             for (int y = 0; y < 7; y++) {
                 if (this.board[x][y] == 0) {
-                    System.out.print(" O ");
+                    System.out.print("   ");
                 } else if (this.board[x][y] == 1) {
                     System.out.print(" \u001B[31mX\u001B[0m ");
+                } else if (this.board[x][y] == 2) {
+                    System.out.print(" \u001B[34mX\u001B[0m ");
                 }
                 System.out.print("|");
             }
@@ -40,8 +44,13 @@ public class Game {
         }
     }
 
-    public void makeMove(int player, int column, int row) {
-        for (int x = 0; x < row; x++) {
+    public void makeMove(int player, int column) {
+        for (int x = 0; x < 6; x++) {
+            if (this.board[x][column] != 0) {
+                this.board[x - 1][column] = player;
+                drawBoard();
+                break;
+            }
             this.board[x][column] = player;
             try {
                 Thread.sleep(500);
