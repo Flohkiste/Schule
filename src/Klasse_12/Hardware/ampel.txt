@@ -1,0 +1,20 @@
+
+int main
+{
+
+    PortOut ampel(PortC, 0x07);
+
+    while (true){
+        ampel = 0b001; //Rot
+        ThisThread::sleep_for(7500);
+
+        ampel = 0b101; //Rot - Gelb
+        ThisThread::sleep_for(1000);
+
+        ampel = 0b010; //Grün
+        ThisThread::sleep_for(10000);
+
+        ampel = 0b100; //Gelb
+        ThisThread::sleep_for(1000);
+    }
+}
