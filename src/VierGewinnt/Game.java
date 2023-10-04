@@ -1,8 +1,11 @@
 package VierGewinnt;
 
+import java.util.Scanner;
+
 public class Game {
 
-    private int[][] board = new int[6][7];
+    private Scanner sc = new Scanner(System.in);
+    private int[][] board = new int[6][7]; // board[row][column]
     private int currentPlayer = 1;
 
     public Game() {
@@ -13,10 +16,28 @@ public class Game {
             }
         }
         drawBoard();
-        makeMove(currentPlayer, 4, 4);
+        gameLoop();
     }
 
     public void gameLoop() {
+        while (true) {
+            if (checkWin()) {
+                System.out.println("Player " + currentPlayer + " won!");
+                break;
+            }
+            if (checkDraw()) {
+                System.out.println("Draw!");
+                break;
+            }
+
+            makeMove(currentPlayer);
+
+            if (currentPlayer == 1) {
+                currentPlayer = 2;
+            } else {
+                currentPlayer = 1;
+            }
+        }
     }
 
     public void drawBoard() {
@@ -33,6 +54,8 @@ public class Game {
                     System.out.print(" O ");
                 } else if (this.board[x][y] == 1) {
                     System.out.print(" \u001B[31mX\u001B[0m ");
+                } else if (this.board[x][y] == 2) {
+                    System.out.print(" \u001B[34mX\u001B[0m ");
                 }
                 System.out.print("|");
             }
@@ -40,21 +63,85 @@ public class Game {
         }
     }
 
-    public void makeMove(int player, int column, int row) {
-        for (int x = 0; x < row; x++) {
-            this.board[x][column] = player;
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+    public void makeMove(int player) {
+        int column = getColumn();
+        for (int x = 0; x < 6; x++) {
+            if (this.board[x][column] != 0) {
+                this.board[x - 1][column] = player;
+                drawBoard();
+                break;
             }
+            this.board[x][column] = player;
 
             if (x != 0) {
                 this.board[x - 1][column] = 0;
             }
             drawBoard();
+
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+    }
+
+    public int getColumn() {
+        int x;
+        while (true) {
+            System.out.print("Player " + currentPlayer + " please enter a column: ");
+            x = sc.nextInt();
+            x--;
+            if ((x >= 0 && x <= 6) && this.board[0][x] == 0) {
+                break;
+            } else {
+                drawBoard();
+                System.out.println("\u001B[31mInvalid input!Please try again!\u001B[0m");
+            }
+        }
+
+        return x;
+    }
+
+    private boolean checkDraw() {
+        return false;
+    }
+
+    private boolean checkWin() {
+        if (checkWinRow() | checkWinColumn() | checkWinDiagonal()) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean checkWinDiagonal() {
+        return false;
+    }
+
+    private boolean checkWinColumn() {
+
+        return false;
+    }
+
+    private boolean checkWinRow() {
+        int z = 0;
+        for (int x = 0; x < 6; x++) {
+            for (int y = 1; y < 7; y++) {
+                if (this.board[x][y] != 0) {
+                    if (this.board[x][y] == this.board[x][y - 1]) {
+                        z++;
+                        if (z == 3) {
+                            return true;
+                        }
+                    }
+
+                } else {
+                    z = 0;
+                }
+            }
+        }
+        return false;
+
     }
 
 }
