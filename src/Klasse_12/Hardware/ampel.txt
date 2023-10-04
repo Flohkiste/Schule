@@ -2,10 +2,10 @@
 int main
 {
 
-    PortOut ampel(PortC, 0x07);
+    PortOut ampel(PortC,0xC7);
 
     while (true){
-        ampel = 0b001; //Rot
+        ampel = 0b10111001; //Rot
         ThisThread::sleep_for(7500);
 
         ampel = 0b101; //Rot - Gelb
