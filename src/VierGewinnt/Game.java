@@ -20,7 +20,11 @@ public class Game {
     }
 
     public void gameLoop() {
+
         while (true) {
+
+            makeMove(currentPlayer);
+
             if (checkWin()) {
                 System.out.println("Player " + currentPlayer + " won!");
                 break;
@@ -29,8 +33,6 @@ public class Game {
                 System.out.println("Draw!");
                 break;
             }
-
-            makeMove(currentPlayer);
 
             if (currentPlayer == 1) {
                 currentPlayer = 2;
@@ -118,9 +120,24 @@ public class Game {
         return false;
     }
 
-    private boolean checkWinColumn() {
+    private boolean checkWinColumn() { // board[row][column]
+        int z = 0;
+
+        for (int x = 0; x < 7; x++) {
+            for (int y = 1; y < 6; y++) {
+                if ((this.board[y][x] != 0) && (this.board[y][x] == this.board[y - 1][x])) {
+                    z++;
+                    if (z == 3) {
+                        return true;
+                    }
+                } else {
+                    z = 0;
+                }
+            }
+        }
 
         return false;
+
     }
 
     private boolean checkWinRow() {
