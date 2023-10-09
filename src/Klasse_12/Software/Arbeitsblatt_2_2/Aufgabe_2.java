@@ -6,6 +6,7 @@ public class Aufgabe_2 {
         System.out.println(getAnzahlZiffern(1241234));
         System.out.println(getZiffernWert(1234, 2));
         System.out.println(ersetzeZiffer(1234, 2, 5));
+        System.out.println(ersetzeZiffer1(1234, 2, 5));
     }
 
     public static int getBetrag(int pZahl) {
@@ -41,10 +42,37 @@ public class Aufgabe_2 {
         return Integer.parseInt(pZahlString.toString());
     }
 
+    // Ab hier nicht fertig
+
     public static int[] intToArray(int number) {
-        int numberLenght = getAnzahlZiffern(number);
+        String numberString = String.valueOf(number);
+        int numberLenght = numberString.length();
         int[] numberArray = new int[numberLenght];
+
+        for (int x = 0; x < numberLenght; x++) {
+            numberArray[x] = numberString.charAt(x);
+        }
+
         return numberArray;
+    }
+
+    public static int ersetzeZiffer1(int pZahl, int pStelle, int pWert) {
+        String pZahlString;
+        int[] pZahlArray = intToArray(pZahl);
+
+        for (int i = 0; i < pZahlArray.length; i++) {
+            System.out.print(pZahlArray[i] + " ");
+        }
+
+        pZahlArray[pZahlArray.length - pStelle - 1] = pWert;
+
+        pZahlString = String.valueOf(pZahlArray[0]);
+        for (int x = 1; x < pZahlArray.length; x++) {
+            pZahlString = pZahlString + pZahlArray[x];
+        }
+        pZahl = Integer.valueOf(pZahlString);
+
+        return pZahl;
     }
 
 }
