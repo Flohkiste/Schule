@@ -39,6 +39,5 @@ public class Aufgabe_2 {
         pStelle = pZahlString.length() - pStelle - 1;
         pZahlString.setCharAt(pStelle, Character.forDigit(pWert, 10));
         return Integer.parseInt(pZahlString.toString());
-
     }
 }
