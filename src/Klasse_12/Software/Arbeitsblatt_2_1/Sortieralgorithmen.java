@@ -1,4 +1,4 @@
-package Klasse_12.Arbeitsblatt_2_1;
+package Klasse_12.Software.Arbeitsblatt_2_1;
 
 import java.util.Scanner;
 
