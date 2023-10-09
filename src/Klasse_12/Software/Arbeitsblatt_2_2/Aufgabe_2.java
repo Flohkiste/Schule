@@ -42,15 +42,14 @@ public class Aufgabe_2 {
         return Integer.parseInt(pZahlString.toString());
     }
 
-    // Ab hier nicht fertig
-
+    // Zweite Lösung für ersetze Ziffer
     public static int[] intToArray(int number) {
         String numberString = String.valueOf(number);
         int numberLenght = numberString.length();
         int[] numberArray = new int[numberLenght];
 
         for (int x = 0; x < numberLenght; x++) {
-            numberArray[x] = numberString.charAt(x);
+            numberArray[x] = Integer.valueOf(String.valueOf(numberString.charAt(x)));
         }
 
         return numberArray;
@@ -59,10 +58,6 @@ public class Aufgabe_2 {
     public static int ersetzeZiffer1(int pZahl, int pStelle, int pWert) {
         String pZahlString;
         int[] pZahlArray = intToArray(pZahl);
-
-        for (int i = 0; i < pZahlArray.length; i++) {
-            System.out.print(pZahlArray[i] + " ");
-        }
 
         pZahlArray[pZahlArray.length - pStelle - 1] = pWert;
 
