@@ -1,0 +1,39 @@
+/* mbed Microcontroller Library
+ * Copyright (c) 2019 ARM Limited
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include "mbed.h"
+
+int pause = 100;
+
+int main()
+{
+    PortOut rgbled(PortC,0b00000111);
+    while (true) {
+        rgbled = 1;
+        ThisThread::sleep_for(pause);
+        
+        rgbled = 2;
+        ThisThread::sleep_for(pause);
+
+        rgbled = 4;
+        ThisThread::sleep_for(pause);
+
+        rgbled = 0;
+        ThisThread::sleep_for(pause);
+
+        rgbled = 3;
+        ThisThread::sleep_for(pause);
+
+        rgbled = 6;
+        ThisThread::sleep_for(pause);
+
+        rgbled = 5;
+        ThisThread::sleep_for(pause);
+
+        rgbled = 0;
+        ThisThread::sleep_for(pause);
+    }
+}
+

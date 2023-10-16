@@ -1,0 +1,63 @@
+/* mbed Microcontroller Library
+ * Copyright (c) 2019 ARM Limited
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include "mbed.h"
+
+
+int blinkingRate = 500;
+int frequenzManipulation = 1;
+
+
+
+
+int main()
+{
+    DigitalIn taster(PA_6);
+    DigitalIn taster2(PA_1);
+    DigitalIn taster3(PA_10);
+    int mode = 0;
+    PortOut myLed(PortC, 0b00001111);
+    taster.mode(PullDown);
+    taster2.mode(PullDown);
+    taster3.mode(PullDown);
+    while (true) {
+
+        if (taster3) {
+            mode = !mode;
+        }
+        if (taster2) {
+            blinkingRate = blinkingRate * 2;
+        }else if (blinkingRate > 1 && taster) {
+            blinkingRate = blinkingRate / 2;
+        }
+        
+        if (!mode) {
+            
+            if (myLed == 1) {
+                myLed = 2;
+            }else {
+                myLed = 1;
+            }
+
+    	    ThisThread::sleep_for(blinkingRate);
+            
+            
+        }
+        if (mode) {
+            
+            if (myLed == 0b00000100) {
+                myLed = 0b00001000;
+            }else {
+                myLed = 0b00000100;
+            }
+
+            ThisThread::sleep_for(blinkingRate / 2);
+                
+        }    
+    }
+
+
+}
+
