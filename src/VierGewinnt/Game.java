@@ -115,6 +115,14 @@ public class Game {
     }
 
     private boolean checkWinDiagonal() {
+        int[] row = {2, 1, 1, 1};
+        int[] column = {1, 1, 2, 3};
+        int[] z = {5, 6, 6, 5};
+        for(int x = 0; x < 4; x++){
+            for(int y = 0; y < z[x]; y++){
+                
+            }
+        }
         return false;
     }
 
