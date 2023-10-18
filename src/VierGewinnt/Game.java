@@ -9,7 +9,6 @@ public class Game {
     private int currentPlayer = 1;
 
     public Game() {
-        // Setting all values in the array to zero
         for (int x = 0; x < 6; x++) {
             for (int y = 0; y < 7; y++) {
                 board[x][y] = 0;
@@ -43,7 +42,6 @@ public class Game {
     }
 
     public void drawBoard() {
-        // clear the console
         System.out.print("\033[H\033[2J");
         System.out.flush();
 
