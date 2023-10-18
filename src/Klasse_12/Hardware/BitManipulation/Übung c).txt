@@ -1,0 +1,21 @@
+#include "mbed.h"
+
+DigitalOut myled(PC_1);
+PortIn schalter(PortB,0x00FF); 
+int main()
+{
+    int wert;
+    int maske= 0b00011010;
+    schalter.mode(PullDown); //schalter mit Pulldowns
+    while (true) {
+	    wert=schalter;
+	    if ((wert & maske)== 0b00011000) //mindestens ein Schalter eingeschaltet
+	    {
+	    	myled = 1;
+	    }
+	    else
+	    {
+	    	myled = 0;
+	    }
+    }
+}

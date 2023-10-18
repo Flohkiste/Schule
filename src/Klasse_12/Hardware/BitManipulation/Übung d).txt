@@ -1,0 +1,15 @@
+#include "mbed.h"
+
+PortOut myled(PortC,0x00FF);
+PortIn schalter(PortB,0x00FF); 
+int main()
+{
+   
+    schalter.mode(PullDown); //schalter mit Pulldowns
+    while (true) {
+	    myled=~schalter;
+
+	    
+	    
+    }
+}

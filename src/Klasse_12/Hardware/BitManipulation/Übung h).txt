@@ -1,0 +1,15 @@
+#include "mbed.h"
+int sleeptime = 250;
+PortOut myled(PortC,0x00FF);
+int main()
+{
+   
+        while (true) {
+	    myled = 0b11111111;
+        ThisThread::sleep_for(sleeptime);
+	    myled = 0;
+        ThisThread::sleep_for(sleeptime);
+	    
+    }
+}
+
