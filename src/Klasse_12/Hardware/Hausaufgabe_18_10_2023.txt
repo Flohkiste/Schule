@@ -1,0 +1,58 @@
+#include "mbed.h"
+DigitalOut myled(PA_5);
+PortOut myledspc(PortC,0x00FF);
+PortIn schalter(PortB,0x00FF);
+int main()
+{
+    int maske;
+    maske = 0b00011010;
+    schalter.mode(PullDown);
+    while   (true){
+
+        //a
+        if(schalter & maske == maske)   
+        {
+            myled = 1;
+        }
+        else
+        {
+            myled = 0;
+        }
+
+        //b
+        if (schalter & maske != maske)
+        {
+            myledspc = 0b0000 0001;
+        }
+        else
+        {
+            myledspc = 0x00;
+        }
+
+        //c
+        if (schalter & maske == 0b00011000)
+        {
+            myledspc = 0b0000 0010;
+        }
+        else
+        {
+            myledspc = 0x00;
+        }
+
+        //d 
+        myledspc = schalter;
+
+        //e
+        maske = 0b00100010;
+        myledspc = schalter | maske;
+
+        //f
+        myledspc = schalter & ~maske;
+
+        //g
+        myledspc = schalter ^ maske;
+
+        //h
+        
+    }
+}
