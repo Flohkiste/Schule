@@ -115,12 +115,21 @@ public class Game {
     }
 
     private boolean checkWinDiagonal() {
-        int[] row = {2, 1, 1, 1};
-        int[] column = {1, 1, 2, 3};
-        int[] z = {5, 6, 6, 5};
-        for(int x = 0; x < 4; x++){
-            for(int y = 0; y < z[x]; y++){
-                
+        int u = 0;
+        int[] row = { 2, 1, 1, 1 };
+        int[] column = { 1, 1, 2, 3 };
+        int[] z = { 5, 6, 6, 5 };
+        for (int x = 0; x < 4; x++) {
+            for (int y = 0; y < z[x]; y++) {
+                if ((this.board[row[x] + y][column[x] + y] != 0)
+                        && (this.board[row[x] + y][column[x] + y] == this.board[row[x] + y - 1][column[x] + y - 1])) {
+                    u++;
+                    if (u == 3) {
+                        return true;
+                    }
+                } else {
+                    u = 0;
+                }
             }
         }
         return false;
