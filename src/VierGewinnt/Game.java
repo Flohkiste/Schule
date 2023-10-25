@@ -114,23 +114,35 @@ public class Game {
         return false;
     }
 
-    private boolean checkWinDiagonal() {
-        int u = 0;
-        int[] row = { 2, 1, 1, 1 };
-        int[] column = { 1, 1, 2, 3 };
-        int[] z = { 5, 6, 6, 5 };
-        for (int x = 0; x < 4; x++) {
-            for (int y = 0; y < z[x]; y++) {
-                if ((this.board[row[x] + y][column[x] + y] != 0)
-                        && (this.board[row[x] + y][column[x] + y] == this.board[row[x] + y - 1][column[x] + y - 1])) {
-                    u++;
-                    if (u == 3) {
+    private boolean checkWinDiagonal(){
+        if(checkWinDiagonalLeftToRight() | checkWinDiagonalRightToLeft()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    private boolean checkWinDiagonalRightToLeft(){
+        return false;
+    }
+
+    public boolean checkWinDiagonalLeftToRight() {
+        int z = 0;
+        int[] row = {3, 2, 1, 1, 1, 1};
+        int[] column = {1, 1, 1, 2, 3, 4};
+        int[] maxRuntimes = {3, 4, 5, 5, 4, 3};
+        for(int x = 0; x < 6; x++){
+            for(int y = 0; y < maxRuntimes[x]; y++){
+                if ((this.board[(row[x] + y)][(column[x] + y)] != 0) && (this.board[(row[x] + y)][(column[x] + y)] == this.board[(row[x] + y - 1)][(column[x] + y - 1)])) {
+                    z++;
+                    if (z == 3) {
                         return true;
                     }
                 } else {
-                    u = 0;
+                    z = 0;
                 }
             }
+            
         }
         return false;
     }
