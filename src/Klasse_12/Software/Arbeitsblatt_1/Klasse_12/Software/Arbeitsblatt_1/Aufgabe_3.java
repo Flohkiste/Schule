@@ -1,5 +1,7 @@
+package Klasse_12.Software.Arbeitsblatt_1;
 import java.util.Random;
 import java.util.Scanner;
+
 
 public class Aufgabe_3 {
     public static Scanner sc;

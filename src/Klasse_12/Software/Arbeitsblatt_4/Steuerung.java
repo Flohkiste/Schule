@@ -1,3 +1,4 @@
+package Klasse_12.Software.Arbeitsblatt_4;
 public class Steuerung {
     public static void main(String[] args){
         Blume[] blumen = {new Blume("Rose", "Rot"), new Blume("Tulpe", "Lila")};

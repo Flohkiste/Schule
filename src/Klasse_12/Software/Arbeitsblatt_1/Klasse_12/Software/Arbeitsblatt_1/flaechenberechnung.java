@@ -1,4 +1,4 @@
-
+package Klasse_12.Software.Arbeitsblatt_1;
 import java.util.Scanner;
 
 public class flaechenberechnung {

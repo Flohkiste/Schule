@@ -1,3 +1,4 @@
+package Klasse_12.Software.Arbeitsblatt_4;
 import java.util.Random;
 
 public class Blume{
