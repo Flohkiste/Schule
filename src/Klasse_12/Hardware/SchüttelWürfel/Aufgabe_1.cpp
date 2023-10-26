@@ -1,4 +1,6 @@
 #include "mbed.h"
+#include "LCD.h"
+lcd myLCD;
 
 int main(){
     DigtalIn vibrationsSensor(PB_0);
@@ -13,9 +15,11 @@ int main(){
         while(vibrationsSensor){
             zaehler++;
             if(zaehler > 6){
-                zaehler = 0;
+                zaehler = 1;
             }
-            ausgabe = zaehler;
         }
+        ausgabe = zaehler;
+        myLCD.printf("Zahl: %i", zaehler);
+        sleep_for(5000);
     }
 }
