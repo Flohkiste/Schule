@@ -45,6 +45,7 @@ public class Game {
         System.out.print("\033[H\033[2J");
         System.out.flush();
 
+        System.out.println("\u001B[31mPlayer1: X\u001B[0m           \u001B[34mPlayer2: X\u001B[0m");
         System.out.println(
                 "-------------------------------\n|| 1 | 2 | 3 | 4 | 5 | 6 | 7 ||\n-------------------------------");
         for (int x = 0; x < 6; x++) {
