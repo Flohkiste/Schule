@@ -108,7 +108,17 @@ public class Game {
     }
 
     private boolean checkDraw() {
-        return false;
+        int y = 0;
+        for(int x = 0; x < 7; x++){
+            if(this.board[0][x] != 0){
+                y++;
+            }
+        }
+        if(y == 7){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     private boolean checkWin() {
