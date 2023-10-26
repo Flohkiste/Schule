@@ -123,22 +123,22 @@ public class Game {
     }
 
     private boolean checkWinDiagonalRightToLeft(){
-    //    int z = 0;
-    //    int[] row = {2, 3, 4, 4, 4, 4};
-    //    int[] column = {1, 1, 1, 2, 3, 4};
-    //    int[] maxRuntimes = {3, 4, 5, 5, 4, 3};
-    //    for(int x = 0; x < 6; x++){
-    //        for(int y = 0; y < maxRuntimes[x]; y++){
-    //            if ((this.board[(row[x] - y)][(column[x] + y)] != 0) && (this.board[(row[x] - y)][(column[x] + y)] == this.board[(row[x] - y - 1)][(column[x] + y - 1)])) {
-    //                z++;
-    //                if (z == 3) {
-    //                    return true;
-    //                }
-    //            } else {
-    //                z = 0;
-    //            } 
-    //        }
-    //    }
+        int z = 0;
+        int[] row = {2, 3, 4, 4, 4, 4};
+        int[] column = {1, 1, 1, 2, 3, 4};
+        int[] maxRuntimes = {3, 4, 5, 5, 4, 3};
+        for(int x = 0; x < 6; x++){
+            for(int y = 0; y < maxRuntimes[x]; y++){
+                if ((this.board[(row[x] - y)][(column[x] + y)] != 0) && (this.board[(row[x] - y)][(column[x] + y)] == this.board[(row[x] - y + 1)][(column[x] + y - 1)])) {
+                    z++;
+                    if (z == 3) {
+                        return true;
+                    }
+                } else {
+                    z = 0;
+                } 
+            }
+        }
 
         return false;
     }
