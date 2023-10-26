@@ -22,5 +22,6 @@ public class Aufgabe_3 {
         } while (input != r);
 
         System.out.println("Richtig!");
+        scanner.close();
     }
 }

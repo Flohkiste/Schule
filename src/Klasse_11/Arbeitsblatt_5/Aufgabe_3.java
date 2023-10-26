@@ -13,5 +13,6 @@ public class Aufgabe_3 {
         ergebnis = zahl1 / zahl2;
         System.out.println("Das Ergebniss: " + zahl1 + " / " + zahl2 + " = " + ergebnis);
 
+        tastatur.close();
     }
 }

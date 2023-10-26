@@ -22,7 +22,7 @@ public class Aufgabe_4 {
         }
 
         System.out.println("\nDie größte davon ist: " + getLargest(array));
-
+        scanner.close();
 
 
     }

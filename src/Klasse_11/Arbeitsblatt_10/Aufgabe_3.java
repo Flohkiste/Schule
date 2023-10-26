@@ -26,6 +26,6 @@ public class Aufgabe_3 {
         }
 
         System.out.println("Programmende Brief!");
-
+        tastatur.close();
     }
 }

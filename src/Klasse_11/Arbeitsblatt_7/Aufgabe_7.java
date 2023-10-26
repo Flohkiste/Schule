@@ -79,6 +79,6 @@ public class Aufgabe_7 {
             System.out.println("Ungültige Eingabe!!!");
         }
 
-
+        tastatur.close();
     }
 }

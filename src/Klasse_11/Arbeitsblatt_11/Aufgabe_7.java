@@ -23,5 +23,7 @@ public class Aufgabe_7 {
 
         System.out.println(solution);
 
+        scanner.close();
+
     }
 }

@@ -22,6 +22,6 @@ public class Aufgabe_4 {
         }else {
             System.out.println("Shop geschlossen!");
         }
-
+        tastatur.close();
     }
 }

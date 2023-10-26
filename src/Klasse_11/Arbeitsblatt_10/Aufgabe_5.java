@@ -63,6 +63,6 @@ public class Aufgabe_5 {
         int year = tastatur.nextInt();
 
         System.out.println("Der " + day + "." + month + "." + year + " ist ein " + weekday(day, month, year));
-
+        tastatur.close();
     }
 }

@@ -14,6 +14,9 @@ public class Game {
                 board[x][y] = 0;
             }
         }
+    }
+
+    public void startGame(){
         drawBoard();
         gameLoop();
     }

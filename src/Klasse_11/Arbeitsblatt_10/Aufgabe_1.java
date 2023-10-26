@@ -33,5 +33,6 @@ public class Aufgabe_1 {
                 System.out.println("Fehlerhafte Eingabe bitte versuchen sie es Erneut!");
         }
 
+        tastatur.close();
     }
 }

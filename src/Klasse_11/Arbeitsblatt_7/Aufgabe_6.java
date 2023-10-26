@@ -23,5 +23,6 @@ public class Aufgabe_6 {
             System.out.println("Das Dreieck lässt sich nicht konstruieren.");
         }
 
+        tastatur.close();
     }
 }

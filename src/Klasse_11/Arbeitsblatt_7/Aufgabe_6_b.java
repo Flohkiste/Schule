@@ -19,5 +19,6 @@ public class Aufgabe_6_b {
             System.out.println("Sie erhalten keine Provision! Du Geringverdiener");
         }
 
+        tastatur.close();
     }
 }

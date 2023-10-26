@@ -12,5 +12,6 @@ public class Aufgabe_1 {
         sentence = sentence.replace('r', 'l');
         sentence = sentence.replace('R', 'L');
         System.out.println(sentence);
+        scanner.close();
     }
 }

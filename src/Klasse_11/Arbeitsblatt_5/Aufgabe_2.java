@@ -19,5 +19,6 @@ public class Aufgabe_2 {
         System.out.println("Das Ergebnis der Division " + dividend + " / " + divisor + " ist " + ergebnis + " der Rest ist " + rest);
         System.out.println("Programmende Ganzteil.");
 
+        tastatur.close();
     }
 }

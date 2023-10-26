@@ -20,5 +20,6 @@ public class Aufgabe_1 {
 
         System.out.println("Summe: " + summe + "; Durchschnitt: " + summe / durchläufe);
 
+        scanner.close();
     }
 }

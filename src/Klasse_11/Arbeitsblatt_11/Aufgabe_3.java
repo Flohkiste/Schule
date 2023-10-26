@@ -27,7 +27,7 @@ public class Aufgabe_3 {
 
 
         System.out.println(Math.pow(x, n));
-
+        scanner.close();
 
 
     }

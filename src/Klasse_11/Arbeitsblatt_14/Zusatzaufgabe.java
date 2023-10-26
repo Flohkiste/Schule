@@ -26,6 +26,7 @@ public class Zusatzaufgabe {
         }else{
             System.out.println(word + " ist kein Palindrom!");
         }
+        scanner.close();
 
     }
 }

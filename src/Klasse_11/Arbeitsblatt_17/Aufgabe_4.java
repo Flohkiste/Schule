@@ -5,7 +5,6 @@ import java.util.Scanner;
 public class Aufgabe_4 {
 
 	public static void main(String[] args) {
-		boolean loopVariable = true;
 		Scanner scanner = new Scanner(System.in);
 		
 		//Eingabe
@@ -27,6 +26,7 @@ public class Aufgabe_4 {
 			allGrades[x] = grades;
 			
 			System.out.println("");
+			scanner.close();
 		}
 		
 		

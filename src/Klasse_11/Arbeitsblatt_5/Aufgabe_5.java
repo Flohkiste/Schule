@@ -12,5 +12,6 @@ public class Aufgabe_5 {
         int alterInTagen = alter * 365;
         System.out.println("Hallo " + Name + " du bist " + alterInTagen + " Tage alt");
 
+        tastatur.close();
     }
 }

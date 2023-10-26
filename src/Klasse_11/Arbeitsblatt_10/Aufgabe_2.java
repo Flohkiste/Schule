@@ -70,5 +70,6 @@ public class Aufgabe_2 {
                 System.out.println("Kreiskegel Volumen: " + volumen);
                 break;
         }
+        tastatur.close();
     }
 }

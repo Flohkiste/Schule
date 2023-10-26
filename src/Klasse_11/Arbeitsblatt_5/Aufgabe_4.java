@@ -9,5 +9,6 @@ public class Aufgabe_4 {
         String name = tastatur.nextLine();
         System.out.println("Guten Morgen Herr " + name + "!");
 
+        tastatur.close();
     }
 }

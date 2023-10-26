@@ -24,6 +24,7 @@ public class Aufgabe_4 {
         }else{
             System.out.println(word + " ist kein Palindrom!");
         }
+        scanner.close();
 
     }
 }

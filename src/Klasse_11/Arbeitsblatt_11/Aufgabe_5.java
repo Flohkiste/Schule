@@ -52,7 +52,7 @@ public class Aufgabe_5 {
             System.out.print(" ");
             spaces -=1;
         }
-
+        scanner.close();
 
 
     }

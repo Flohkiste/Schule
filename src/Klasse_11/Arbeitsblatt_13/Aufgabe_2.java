@@ -20,5 +20,6 @@ public class Aufgabe_2 {
 
         System.out.print(" teilbar");
 
+        scanner.close();
     }
 }

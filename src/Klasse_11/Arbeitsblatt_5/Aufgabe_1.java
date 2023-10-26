@@ -11,6 +11,6 @@ public class Aufgabe_1 {
         int alter = tastatur.nextInt();
         System.out.println("Sie sind " + alter + " Jahre alt und heißen " + name + "!");
 
-
-    }
+        tastatur.close();
+    }   
 }

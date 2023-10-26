@@ -1,7 +1,9 @@
 package VierGewinnt;
 
-public class main {
+public class VierGewinnt {
     public static void main(String[] args) {
         Game game = new Game();
+        game.startGame();
     }
 }
+

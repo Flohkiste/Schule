@@ -37,5 +37,6 @@ public class Zusatzaufgabe_Ostermontag {
         }
 
         System.out.println("Im Jahr " + year + " ist der Ostersonntag am " + day + "." + month + ".");
+        tastatur.close();
     }
 }

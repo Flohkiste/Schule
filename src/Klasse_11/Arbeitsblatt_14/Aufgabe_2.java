@@ -20,6 +20,6 @@ public class Aufgabe_2 {
         sentence = sentence.replace("u", "");
         sentence = sentence.replace("U", "");
         System.out.println(sentence);
-
+        scanner.close();
     }
 }
