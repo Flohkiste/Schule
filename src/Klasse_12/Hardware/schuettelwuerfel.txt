@@ -1,0 +1,35 @@
+/* mbed Microcontroller Library
+ * Copyright (c) 2019 ARM Limited
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include "mbed.h"
+#include "LCD.h"
+
+#define pause 100ms
+
+DigitalIn schuetl(PB_0);
+lcd mylcd;
+
+void lcdOut(int zahl){
+    mylcd.cursorpos(0);
+    mylcd.printf("Zahl ist: %i", zahl);
+}
+
+int main(){
+    PortOut lcd(PortC, 0x11100000);
+    int x = 0;
+    mylcd.clear();
+    while (true) {
+        while(schuetl != 0){
+            x++;
+            if(x > 6){
+                x = 1;
+            }
+        }
+
+        lcdOut(x);
+
+    }
+}
+
