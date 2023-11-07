@@ -15,13 +15,13 @@ public class Tier {
     }
 
     public void rennen(){
-        int geschwindigkeit = 0 + (int)(Math.random() * (60 + 1));
+        int geschwindigkeit = 0 + (int)(Math.random() * (this.aMaxGeschwindigkeit + 1));
 
         if(geschwindigkeit == 0){
             System.out.println("Ich stehe...");
         }else if(geschwindigkeit < 20){
             System.out.println("Ich spaziere...");
-        }else if(geschwindigkeit < 50){
+        }else if(geschwindigkeit < this.aMaxGeschwindigkeit){
             System.out.println("Ich renne...");
         }else{
             System.out.println("Ich sprinte...");
