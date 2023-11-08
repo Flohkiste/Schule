@@ -1,0 +1,31 @@
+/* mbed Microcontroller Library
+ * Copyright (c) 2019 ARM Limited
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include "mbed.h"
+
+
+int main()
+{
+    DigitalInOut se1InOut(PB_6);
+    DigitalInOut se2InOut(PB_7);
+    DigitalIn eingabeTaste1(PA_1);
+    DigitalIn eingabeTaste2(PA_6);
+    DigitalOut testSE1(PC_0);
+    DigitalOut testSE2(PC_1);
+
+    se1InOut.output();
+    se2InOut.output();
+    se1InOut.mode(OpenDrain);
+    se2InOut.mode(OpenDrain);
+    eingabeTaste1.mode(PullDown);
+    eingabeTaste2.mode(PullDown);
+
+    while(true){
+        se1InOut = !eingabeTaste1;
+        se2InOut = !eingabeTaste2;
+        testSE1 = se1InOut;
+        testSE2 = se2InOut;
+    }
+}
