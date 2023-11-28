@@ -7,6 +7,7 @@ public class Steuerung {
         Kontakt kontakt2 = new Kontakt("Peter Kraus", "Blumenweg", "15", "88214", "Ravensburg", "");
 
         kontakt1.ausgabe();
+        System.out.println();
         kontakt2.ausgabe();
     }
 }
