@@ -31,6 +31,7 @@ public class Kontakt {
         System.out.println("Wohnort: " + wohnort);
         System.out.println("PLZ: " + plz);
         System.out.println("Email: " + email);
+        System.out.println("Kommentar: " + kommentar);
     }
 
     public String getVorname() {
@@ -87,6 +88,14 @@ public class Kontakt {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getKommentar(){
+        return kommentar;
+    }
+
+    public void setKommentar(String kommentar){
+        this.kommentar = kommentar;
     }
 
 }
