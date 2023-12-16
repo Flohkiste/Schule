@@ -1,0 +1,13 @@
+#include "mbed.h"
+const char anzeigeTabelle[]= {0x3F, 0x06, 0x5b, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F};
+int main() {
+    PortOut anzeige(PortC,0xFF);
+    DigitalOut einerstelle(PC_11);
+
+    int i=1;
+
+    while(true) {
+      einerstelle=1;
+      anzeige = anzeigeTabelle[i];
+    }
+}

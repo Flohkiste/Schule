@@ -1,0 +1,56 @@
+#include "mbed.h"
+
+const char anzeigeTabelle[10] = {0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F};
+
+PortOut anzeige(PortC, 0xFF);
+DigitalIn hoch(PA_10);
+DigitalIn runter(PA_6);
+DigitalOut einerStelle(PC_11);
+DigitalOut zehnerStelle(PC_12);
+
+void segment(int einerzahl, int zehnerzahl) {
+    einerStelle = 1;
+    anzeige = anzeigeTabelle[einerzahl];
+    einerStelle = 0;
+    ThisThread::sleep_for(5);
+    zehnerStelle = 1;
+    anzeige = anzeigeTabelle[zehnerzahl];
+    zehnerStelle = 0;
+    thisThread::sleep_for(5);
+}
+
+int main() {
+    int einerzahl, zehnerzahl;
+
+    hoch.mode(PullDown);
+    runter.mode(PullDown);   
+    while(true) {
+        if(hoch) {
+            einerzahl++;
+            if(einerzahl > 9) {
+                einerzahl = 0;
+                zehnerzahl++;
+                if (zehnerzahl > 9) {
+                    zehnerzahl = 0;
+                }
+            }
+            while (hoch) {
+                segment(einerzahl, zehnerzahl);
+            }
+        }
+        if(runter) {
+            einerzahl--;
+            if(einerzahl < 0) {
+                einerzahl = 9;
+                zehnerzahl--;
+                if (zehnerzahl < 0) {
+                    zehnerzahl = 9;
+                }
+            }
+            while (runter) {
+                segment(einerzahl, zehnerzahl);
+            }
+        }
+    segment(einerzahl, zehnerzahl);
+    }
+}

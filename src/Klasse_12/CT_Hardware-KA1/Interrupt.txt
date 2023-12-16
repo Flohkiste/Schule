@@ -1,0 +1,19 @@
+#include "mbed.h"
+
+InterruptIn rauf(PA_1);
+
+void isrRauf(void) {
+  rauf.disable_irq();
+  //code
+  rauf.enable_irq();
+}
+
+int main() { 
+  rauf.rise(&isrRauf);
+  //rauf.fall(&isrFall); //fallende Flanke
+  rauf.mode(PullDown);
+  //rauf.mode(PullUp);
+  
+  while(true) {
+  }
+}

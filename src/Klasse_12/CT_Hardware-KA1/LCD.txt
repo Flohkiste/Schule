@@ -1,0 +1,12 @@
+#include "LCD.h"
+lcd mylcd;
+
+void lcd(float wert) {
+  mylcd.clear();
+  mylcd.cursorpos(0);	//2 Zeile: 64
+  mylcd.printf("Text: %f", wert);
+}
+
+int main() {
+  lcd(wert);	//übergibt float Wert
+}

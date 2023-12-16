@@ -1,0 +1,14 @@
+#include "mbed.h"
+
+int main() {
+    float wert;    
+    AnalogIn ain(PA_4);
+
+    while(true) {
+        wert=0;
+        for (int i=0; i<=100; i++) {
+            wert = wert+13/ain.read();
+            thread_sleep_for(1);    
+        }
+    }
+}
