@@ -14,9 +14,12 @@ DigitalOut led(PC_0);
 InterruptIn btnStunde(PA_1);
 InterruptIn btnMinute(PA_6);
 InterruptIn btnSekunde(PA_10);
+AnalogIn selector(PA_0);
 int sekunde = 0;
 int minute = 0;
 int stunde = 0;
+
+int analog;
 
 
 void lcd() {
@@ -38,7 +41,11 @@ void checkOverflow(void){
 
 void isrStunde(void) {
   btnStunde.disable_irq();
-  stunde ++;
+  if (analog < 50 & stunde != 0) {
+      stunde --;
+  }else if (analog > 50) {
+    stunde++;
+  }
   checkOverflow();
   lcd();
   btnStunde.enable_irq();
@@ -46,7 +53,11 @@ void isrStunde(void) {
 
 void isrMinute(void) {
   btnMinute.disable_irq();
-  minute++;
+  if (analog < 50 & minute != 0) {
+      minute --;
+  }else if (analog > 50) {
+    minute++;
+  }
   checkOverflow();
   lcd();
   btnMinute.enable_irq();
@@ -54,7 +65,11 @@ void isrMinute(void) {
 
 void isrSekunde(void) {
   btnSekunde.disable_irq();
-  sekunde ++;
+  if (analog < 50 & minute != 0) {
+      sekunde --;
+  }else if (analog > 50) {
+    sekunde++;
+  }
   checkOverflow();
   lcd();
   btnSekunde.enable_irq();
@@ -84,7 +99,9 @@ int main()
     TIM6->CR1 = 1;
     lcd();
 
+
     while (true) {
+        analog = selector.read() * 100;
         if(TIM6->SR==1){
             TIM6->SR = 0;
             TIM6->CNT = 0;
