@@ -1,0 +1,96 @@
+/* mbed Microcontroller Library
+ * Copyright (c) 2019 ARM Limited
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include "mbed.h"
+#include "LCD.h"
+lcd mylcd;
+
+// Blinking rate in milliseconds
+#define BLINKING_RATE     500ms
+
+DigitalOut led(PC_0);
+InterruptIn btnStunde(PA_1);
+InterruptIn btnMinute(PA_6);
+InterruptIn btnSekunde(PA_10);
+int sekunde = 0;
+int minute = 0;
+int stunde = 0;
+
+
+void lcd() {
+  mylcd.clear();
+  mylcd.cursorpos(0);	//2 Zeile: 64
+  mylcd.printf("%02i:%02i:%02i", stunde, minute, sekunde);
+}
+
+void checkOverflow(void){
+    if(sekunde == 60){
+        minute ++;
+        sekunde = 0;
+    }
+    if(minute == 60){
+        stunde ++;
+        minute = 0;
+    }
+}
+
+void isrStunde(void) {
+  btnStunde.disable_irq();
+  stunde ++;
+  checkOverflow();
+  lcd();
+  btnStunde.enable_irq();
+}
+
+void isrMinute(void) {
+  btnMinute.disable_irq();
+  minute++;
+  checkOverflow();
+  lcd();
+  btnMinute.enable_irq();
+}
+
+void isrSekunde(void) {
+  btnSekunde.disable_irq();
+  sekunde ++;
+  checkOverflow();
+  lcd();
+  btnSekunde.enable_irq();
+}
+
+
+
+
+
+int main()
+{
+    // Initialise the digital pin LED1 as an output
+    btnStunde.rise(&isrStunde);
+    btnMinute.rise(&isrMinute);
+    btnSekunde.rise(&isrSekunde);
+
+    btnStunde.mode(PullDown);
+    btnMinute.mode(PullDown);
+    btnSekunde.mode(PullDown);
+
+
+    RCC->APB1ENR |= 0b10000;
+    TIM6->PSC = 31999;
+    TIM6->ARR = 999;
+    TIM6->CNT = 0;
+    TIM6->SR = 0;
+    TIM6->CR1 = 1;
+    lcd();
+
+    while (true) {
+        if(TIM6->SR==1){
+            TIM6->SR = 0;
+            TIM6->CNT = 0;
+            sekunde ++;
+            checkOverflow();
+            lcd();
+        }
+    }
+}
