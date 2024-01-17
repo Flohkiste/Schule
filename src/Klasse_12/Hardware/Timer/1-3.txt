@@ -37,6 +37,9 @@ void checkOverflow(void){
         stunde ++;
         minute = 0;
     }
+    if(stunde == 24){
+        stunde = 0;
+    }
 }
 
 void isrStunde(void) {
