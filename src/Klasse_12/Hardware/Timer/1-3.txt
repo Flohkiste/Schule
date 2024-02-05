@@ -23,9 +23,11 @@ int analog;
 
 
 void lcd() {
+  __disable_irq();
   mylcd.clear();
   mylcd.cursorpos(0);	//2 Zeile: 64
   mylcd.printf("%02i:%02i:%02i", stunde, minute, sekunde);
+  __enable_irq();
 }
 
 void checkOverflow(void){
@@ -68,7 +70,7 @@ void isrMinute(void) {
 
 void isrSekunde(void) {
   btnSekunde.disable_irq();
-  if (analog < 50 & minute != 0) {
+  if (analog < 50 & sekunde != 0) {
       sekunde --;
   }else if (analog > 50) {
     sekunde++;
