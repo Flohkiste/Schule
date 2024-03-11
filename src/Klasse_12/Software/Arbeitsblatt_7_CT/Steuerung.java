@@ -28,7 +28,8 @@ public class Steuerung {
 
         System.out.println("\nDie zu zahlende Steuer: " + berechneSteuer(dasHotel));
         System.out.println("\nDas Vermoegen vor der Aenderung: " + berechneVermoegen(dasHotel));
-        System.out.println("Das Vermoegen nach der Aenderung: " + (berechneVermoegen(dasHotel) - berechneSteuer(dasHotel)));
+        dasHotel[3].aWert -= berechneSteuer(dasHotel);
+        System.out.println("Das Vermoegen nach der Aenderung: " + berechneVermoegen(dasHotel));
 
     }
 	
