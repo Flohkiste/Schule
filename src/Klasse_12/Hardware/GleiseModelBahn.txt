@@ -15,7 +15,12 @@ enum Zustand {INTERRUPT = 0, AUTO = 1};
 
 void lcd() {
   mylcd.cursorpos(0);	//2 Zeile: 64
-  mylcd.printf("Zustand: %i", aktZustand);
+  if (aktZustand == INTERRUPT){
+      mylcd.printf("Zustand: Interrupt");
+  } else {
+      mylcd.printf("Zustand: AUTO");
+  }
+  
   mylcd.cursorpos(64);	//2 Zeile: 64
   mylcd.printf("Gleis: %i", aktGleis + 1);
 }
