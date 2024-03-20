@@ -1,0 +1,81 @@
+/* mbed Microcontroller Library
+ * Copyright (c) 2019 ARM Limited
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include "mbed.h"
+#include "LCD.h"
+lcd mylcd;
+
+// Blinking rate in milliseconds
+volatile int fertig = 0;
+InterruptIn echo(PC_8);
+DigitalOut trigger(PA_10);
+float laufzeit;
+PortOut leds(PortC, 0b00000111);
+
+void isrRise(){
+    TIM6->CNT = 0;
+}
+
+void isrFall(){
+    laufzeit = TIM6->CNT;
+    fertig = 1;
+}
+
+void lcd(float wert) {
+  mylcd.cursorpos(0);	//2 Zeile: 64
+  mylcd.printf("%3.2fcm", wert);
+}
+
+void init(){
+    //Mode
+    echo.mode(PullDown);
+    echo.rise(&isrRise);
+    echo.fall(&isrFall);
+    echo.enable_irq();
+
+    //LCD
+    mylcd.clear();
+
+    //Timer
+    RCC->APB1ENR |= 0b10000;
+    TIM6->PSC = 31;
+    TIM6->ARR = 65535;
+    TIM6->CNT = 65535;
+    TIM6->SR = 0;
+    TIM6->CR1 = 1;
+
+    RCC->APB1ENR |= 0b10000;
+    TIM7->PSC = 31;
+    TIM7->ARR = 65535;
+    TIM7->CNT = 65535;
+    TIM7->SR = 0;
+    TIM7->CR1 = 1;
+}
+
+int main()
+{
+    init();
+    float abstand;
+    while (true) {
+        abstand = laufzeit / 58;
+        lcd(abstand);
+
+        //LEDs
+        if (abstand < 10){
+            leds = 1;
+        }else if (abstand < 50) {
+            leds = 3;
+        } else {
+            leds = 2;
+        }
+
+        fertig = 0;
+        trigger = 1;
+        TIM6->CNT = 0;
+        while (TIM6->CNT < 10) {}
+        trigger = 0;
+        while (fertig != 1) {}
+    }
+}
