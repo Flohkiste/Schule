@@ -1,0 +1,85 @@
+#include "mbed.h"
+#include "LCD.h"
+lcd mylcd;
+
+void lcd(float wert) {
+  mylcd.clear();
+  mylcd.cursorpos(0);	//2 Zeile: 64
+  mylcd.printf("Text: %f", wert);
+}
+
+Ticker ticker;
+
+int aktZustand;
+int autoZaehler;
+PortOut Weichen(PortC, 0xFF);
+int gleise[] = {0b00000, 0b10000, 0b00001, 0b01001, 0b00011, 0b00111};
+int aktGleis = 0;
+enum Zustand {INTERRUPT = 0, AUTO = 1};
+
+InterruptIn tasteModus(PA_6);
+InterruptIn lichtschranke(PA_1);
+
+void gleisAnWeichenAusgeben(){
+    Weichen = gleise[aktGleis];
+}
+
+void gleisNummerErhoehen(){
+    aktGleis += 1;
+    if (aktGleis >= 6){
+        aktGleis = 0;
+    }
+}
+
+void isrLS(){
+    gleisAnWeichenAusgeben();
+    gleisNummerErhoehen();
+}
+
+void tickerOp(){
+    gleisAnWeichenAusgeben();
+    gleisNummerErhoehen();
+    autoZaehler += 1;
+}
+
+void isrModus(){
+    if (aktZustand == AUTO){
+        ticker.detach();
+        aktZustand = INTERRUPT;
+        lichtschranke.enable_irq();
+    } else {
+        aktZustand = AUTO;
+        ticker.attach(&tickerOp, 5);
+        lichtschranke.disable_irq();
+    }
+}
+
+void init(){
+    tasteModus.mode(PullDown);
+    tasteModus.rise(&isrModus);
+
+    lichtschranke.mode(PullDown);
+    lichtschranke.rise(&isrLS);
+}
+
+int main(){
+    aktZustand = INTERRUPT;
+    autoZaehler = 0;
+    isrModus();
+    while (true) {
+        switch (aktZustand) {
+            case INTERRUPT:
+
+            break;
+
+            case AUTO:
+
+            break;
+        }
+
+        if(autoZaehler == 6*3){
+            isrModus();
+        }
+
+    }
+}
