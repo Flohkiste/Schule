@@ -2,11 +2,7 @@
 #include "LCD.h"
 lcd mylcd;
 
-void lcd(float wert) {
-  mylcd.clear();
-  mylcd.cursorpos(0);	//2 Zeile: 64
-  mylcd.printf("Text: %f", wert);
-}
+
 
 Ticker ticker;
 
@@ -17,11 +13,19 @@ int gleise[] = {0b00000, 0b10000, 0b00001, 0b01001, 0b00011, 0b00111};
 int aktGleis = 0;
 enum Zustand {INTERRUPT = 0, AUTO = 1};
 
+void lcd() {
+  mylcd.cursorpos(0);	//2 Zeile: 64
+  mylcd.printf("Zustand: %i", aktZustand);
+  mylcd.cursorpos(64);	//2 Zeile: 64
+  mylcd.printf("Gleis: %i", aktGleis + 1);
+}
+
 InterruptIn tasteModus(PA_6);
 InterruptIn lichtschranke(PA_1);
 
 void gleisAnWeichenAusgeben(){
     Weichen = gleise[aktGleis];
+    lcd();
 }
 
 void gleisNummerErhoehen(){
@@ -32,13 +36,13 @@ void gleisNummerErhoehen(){
 }
 
 void isrLS(){
-    gleisAnWeichenAusgeben();
     gleisNummerErhoehen();
+    gleisAnWeichenAusgeben();
 }
 
 void tickerOp(){
-    gleisAnWeichenAusgeben();
     gleisNummerErhoehen();
+    gleisAnWeichenAusgeben();
     autoZaehler += 1;
 }
 
@@ -49,20 +53,28 @@ void isrModus(){
         lichtschranke.enable_irq();
     } else {
         aktZustand = AUTO;
-        ticker.attach(&tickerOp, 5);
+        ticker.attach(&tickerOp, 1);
         lichtschranke.disable_irq();
     }
+    lcd();
 }
 
+
+
 void init(){
+    mylcd.clear();
     tasteModus.mode(PullDown);
     tasteModus.rise(&isrModus);
 
     lichtschranke.mode(PullDown);
     lichtschranke.rise(&isrLS);
+
+    tasteModus.enable_irq();
+    lichtschranke.enable_irq();
 }
 
 int main(){
+    init();
     aktZustand = INTERRUPT;
     autoZaehler = 0;
     isrModus();
@@ -77,8 +89,10 @@ int main(){
             break;
         }
 
-        if(autoZaehler == 6*3){
+        if(autoZaehler >= 6*3){
+            autoZaehler = 0;
             isrModus();
+            lcd();
         }
 
     }
