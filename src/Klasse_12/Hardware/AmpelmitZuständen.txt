@@ -1,0 +1,62 @@
+#include "mbed.h"
+void warte(int ms){
+    RCC->APB1ENR |= 0b10000; //TIM6
+    TIM6->CNT=0;
+    TIM6->PSC=32000-1;
+    TIM6->ARR=ms-1;
+    TIM6->SR=0;
+    TIM6->CR1=1; //setzt CEN auf 1  
+    while(TIM6->SR==0);
+}
+enum Zustand {ROTROT=0b01000001, ROTGELBROT=0b01000101, GELBROT=0b01000100, GRUENROT=0b01000010, ROTGRUEN=0b10000001};
+PortOut aktZustand(PortC,0b11000111);
+InterruptIn taste(PA_1);
+volatile bool merker=false;
+
+void isr(){
+    merker=true;
+}
+
+int main(){
+    int zeit=1000;
+    aktZustand=ROTROT;
+    taste.mode(PullDown);
+    taste.rise(&isr);
+    while(true)
+    {
+        switch(aktZustand) {
+            case ROTROT: 
+                if (merker==true) {
+                    aktZustand=ROTGRUEN;
+                    zeit=999;
+                    merker=false;
+                }
+                else {
+                aktZustand=ROTGELBROT;
+                zeit=250;
+                }
+            break;
+
+            case ROTGRUEN:
+                aktZustand = ROTROT;
+                zeit = 1000;
+            break;
+
+            case ROTGELBROT:
+                aktZustand = GRUENROT;
+                zeit = 1000;
+            break;
+
+            case GRUENROT:
+                aktZustand = GELBROT;
+                zeit = 250;
+            break;
+
+            case GELBROT:
+                aktZustand = ROTROT;
+                zeit = 1000;
+            break;
+        }
+        warte(zeit);
+    }
+}
