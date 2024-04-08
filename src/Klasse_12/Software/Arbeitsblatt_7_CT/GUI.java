@@ -162,4 +162,12 @@ public class GUI extends JFrame {
 		dieSteuerung.setDaten(anzHotels, euroKurs, yenKurs);
 	}
 	
+	private void setzen() {
+		
+	}
+	
+	private void berechnen() {
+		
+	}
+	
 }
