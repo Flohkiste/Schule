@@ -3,6 +3,7 @@ package hotelkette;
 public class Steuerung {
     private static int aAnzahlHotels = 0;
     private GUI dieGUI;
+    private Hotel dasHotel[];
     
     public Steuerung(GUI pGUI) {
     	dieGUI = pGUI;
