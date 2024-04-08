@@ -26,8 +26,8 @@ public class Steuerung {
 	
 	public void setDaten(int anzHotel, double kursEuro, double kursYen) {
 		aAnzahlHotels = anzHotel;
-		
+		Japan.setKurs(kursYen);
+		Europa.setKurs(kursEuro);
 	}
 
 }
-
