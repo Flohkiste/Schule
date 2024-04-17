@@ -1,0 +1,69 @@
+/* mbed Microcontroller Library
+ * Copyright (c) 2019 ARM Limited
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include "mbed.h"
+#include "LCD.h"
+lcd mylcd;
+
+
+int x = 0;
+
+
+
+
+
+enum Zustand{UP, DOWN, IDLE};
+int aktZustand = IDLE;
+
+DigitalIn tasteUp(PA_1);
+DigitalIn tasteDown(PA_6);
+
+void lcd() {
+  mylcd.cursorpos(0);	//2 Zeile: 64
+  mylcd.printf("wert = %i     ", x);
+}
+
+
+void init(){
+    tasteDown.mode(PullDown);
+    tasteUp.mode(PullDown);
+    lcd();
+}
+
+int main()
+{
+
+    init();
+
+    while (true) {
+        switch (aktZustand) {
+            case IDLE:
+                if (tasteUp) {
+                    aktZustand = UP;
+                    x ++;
+                }else if (tasteDown) {
+                    aktZustand = DOWN;
+                    x --;
+                }
+            break;
+
+            case UP:
+                if (!tasteUp){
+                    aktZustand = IDLE;
+                }
+            break;
+
+            case DOWN:
+                if(!tasteDown){
+                    aktZustand = IDLE;
+                }
+            break;
+        }
+
+        lcd();
+        thread_sleep_for(50);
+
+    }
+}
