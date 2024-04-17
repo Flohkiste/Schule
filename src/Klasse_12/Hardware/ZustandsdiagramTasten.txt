@@ -19,17 +19,19 @@ int aktZustand = IDLE;
 
 DigitalIn tasteUp(PA_1);
 DigitalIn tasteDown(PA_6);
+PortOut leds(PortC, 0xFF);
 
-void lcd() {
+void ausgabe() {
   mylcd.cursorpos(0);	//2 Zeile: 64
   mylcd.printf("wert = %i     ", x);
+  leds = x;
 }
 
 
 void init(){
     tasteDown.mode(PullDown);
     tasteUp.mode(PullDown);
-    lcd();
+    ausgabe();
 }
 
 int main()
@@ -40,10 +42,10 @@ int main()
     while (true) {
         switch (aktZustand) {
             case IDLE:
-                if (tasteUp) {
+                if (tasteUp && x < 0xFF) {
                     aktZustand = UP;
                     x ++;
-                }else if (tasteDown) {
+                }else if (tasteDown && x > 0) {
                     aktZustand = DOWN;
                     x --;
                 }
@@ -62,7 +64,7 @@ int main()
             break;
         }
 
-        lcd();
+        ausgabe();
         thread_sleep_for(50);
 
     }
