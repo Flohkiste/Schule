@@ -7,6 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
 import java.awt.event.ActionListener;
@@ -22,7 +24,11 @@ public class GUI extends JFrame {
 	private JTextField textVermoegen;
 	private JTextField textSteuer;
 	private JTextField textBarVermoegen;
+	private JRadioButton rdbtnDollar;
+	private JRadioButton rdbtnEuro;
+	private JRadioButton rdbtnYen;
 	private static Steuerung dieSteuerung;
+	private ButtonGroup waehrungen;
 
 	/**
 	 * Launch the application.
@@ -97,17 +103,23 @@ public class GUI extends JFrame {
 		lblWaehrungen.setBounds(10, 110, 90, 14);
 		contentPane.add(lblWaehrungen);
 		
-		JRadioButton rdbtnDollar = new JRadioButton("Dollar");
+		waehrungen = new ButtonGroup();
+		
+		rdbtnDollar = new JRadioButton("Dollar");
 		rdbtnDollar.setBounds(110, 106, 53, 23);
 		contentPane.add(rdbtnDollar);
+		rdbtnDollar.setSelected(true);
+		waehrungen.add(rdbtnDollar);
 		
-		JRadioButton rdbtnEuro = new JRadioButton("Euro");
+		rdbtnEuro = new JRadioButton("Euro");
 		rdbtnEuro.setBounds(165, 106, 53, 23);
 		contentPane.add(rdbtnEuro);
+		waehrungen.add(rdbtnEuro);
 		
-		JRadioButton rdbtnYen = new JRadioButton("Yen");
+		rdbtnYen = new JRadioButton("Yen");
 		rdbtnYen.setBounds(220, 106, 53, 23);
 		contentPane.add(rdbtnYen);
+		waehrungen.add(rdbtnYen);
 		
 		JLabel lblVermoegen = new JLabel("Vermoegen");
 		lblVermoegen.setBounds(10, 155, 90, 14);
@@ -121,6 +133,7 @@ public class GUI extends JFrame {
 		JButton btnSetVermoegen = new JButton("SET");
 		btnSetVermoegen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				setzen();
 			}
 		});
 		btnSetVermoegen.setBounds(226, 151, 89, 23);
@@ -129,6 +142,7 @@ public class GUI extends JFrame {
 		JButton btnBerechnen = new JButton("Berechnen");
 		btnBerechnen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				berechnen();
 			}
 		});
 		btnBerechnen.setBounds(10, 227, 89, 23);
@@ -160,14 +174,34 @@ public class GUI extends JFrame {
 		double euroKurs = Double.parseDouble(textKursEuro.getText());
 		
 		dieSteuerung.setDaten(anzHotels, euroKurs, yenKurs);
+		
+		System.out.println("Gespeichert");
 	}
 	
 	private void setzen() {
+		double vermoegen = Double.parseDouble(textVermoegen.getText());
+		Hotel hotel;
+		if (rdbtnDollar.isSelected()) {
+			hotel = new USA(vermoegen);
+		} else if (rdbtnEuro.isSelected()) {
+			hotel = new Europa(vermoegen);
+		} else if (rdbtnYen.isSelected()) {
+			hotel = new Japan(vermoegen);
+		} else {
+			System.out.println("Error");
+			return ;
+		}
+		
+		dieSteuerung.hotelErzeugen(hotel);
 		
 	}
 	
 	private void berechnen() {
+		double vermoegen = dieSteuerung.berechneVermoegen(dieSteuerung.getHotels());
+		double steuer = dieSteuerung.berechneSteuer(dieSteuerung.getHotels());
 		
+		textBarVermoegen.setText(vermoegen + "");
+		textSteuer.setText(steuer + "");
 	}
 	
 }
