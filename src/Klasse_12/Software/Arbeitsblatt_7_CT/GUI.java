@@ -29,6 +29,7 @@ public class GUI extends JFrame {
 	private JRadioButton rdbtnYen;
 	private static Steuerung dieSteuerung;
 	private ButtonGroup waehrungen;
+	private int x = 0;
 
 	/**
 	 * Launch the application.
@@ -179,20 +180,30 @@ public class GUI extends JFrame {
 	}
 	
 	private void setzen() {
-		double vermoegen = Double.parseDouble(textVermoegen.getText());
-		Hotel hotel;
-		if (rdbtnDollar.isSelected()) {
-			hotel = new USA(vermoegen);
-		} else if (rdbtnEuro.isSelected()) {
-			hotel = new Europa(vermoegen);
-		} else if (rdbtnYen.isSelected()) {
-			hotel = new Japan(vermoegen);
-		} else {
-			System.out.println("Error");
-			return ;
+		
+		if (dieSteuerung.getHotels() == null) {
+			speichern();
 		}
 		
-		dieSteuerung.hotelErzeugen(hotel);
+		if(x < dieSteuerung.getAnzHotel()) {
+			double vermoegen = Double.parseDouble(textVermoegen.getText());
+			Hotel hotel;
+			if (rdbtnDollar.isSelected()) {
+				hotel = new USA(vermoegen);
+			} else if (rdbtnEuro.isSelected()) {
+				hotel = new Europa(vermoegen);
+			} else if (rdbtnYen.isSelected()) {
+				hotel = new Japan(vermoegen);
+			} else {
+				System.out.println("Error");
+				return ;
+			}
+			
+			dieSteuerung.hotelErzeugen(hotel);
+			x++;
+		} else {
+			System.out.println("Error Vermoegen für jedes Hotel bereits gesetzt");
+		}
 		
 	}
 	
