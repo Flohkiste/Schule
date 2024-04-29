@@ -1,0 +1,92 @@
+/* mbed Microcontroller Library
+ * Copyright (c) 2019 ARM Limited
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include "mbed.h"
+
+
+InterruptIn taste(PA_1);
+PortOut leds(PortC, 0xFF);
+DigitalIn schalter(PB_0);
+
+enum Zustand {Blinken, Lauflicht, Muster};
+
+int aktZustand = Blinken;
+int tab[7] = {0x6F, 0x72, 0x69, 0x0F, 0xB5, 0xEA, 0xCC};
+int aktMuster;
+
+Ticker ticker;
+
+void umschalten() {
+leds = ~leds;
+}
+
+void starten() {
+leds = 1;
+}
+
+void schieben() {
+leds = leds << 1;
+if (leds == 0) {
+leds = 1;
+}
+}
+void initMuster() {
+aktMuster = 0;
+}
+
+void naechstesMuster() {
+aktMuster = (aktMuster + 1) % 7;
+leds = tab[aktMuster];
+}
+
+void zeitereignis() {
+switch (aktZustand) {
+case Blinken:
+aktZustand = Blinken;
+umschalten();
+break;
+
+case Lauflicht:
+if (schalter == 1) {schieben();ticker.attach(&zeitereignis, 0.5);}
+
+break;
+
+case Muster:
+naechstesMuster();
+break;
+}
+}
+
+void naechstes() {
+switch (aktZustand) {
+case Blinken:
+aktZustand = Lauflicht;
+starten();
+break;
+
+case Lauflicht:
+aktZustand = Muster;
+initMuster();
+break;
+
+case Muster:
+leds = 0;
+aktZustand = Blinken;
+umschalten();
+break;
+}
+}
+void init() {
+taste.mode(PullDown); schalter.mode(PullDown);
+taste.rise(&naechstes);
+taste.enable_irq();
+
+ticker.attach(&zeitereignis, 0.5);
+}
+
+int main() {
+init();
+while (true) {}
+}
