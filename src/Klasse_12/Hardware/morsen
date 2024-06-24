@@ -7,10 +7,10 @@ enum { WARTENAUFTASTE=0, TASTEGEDRUECKT=1, KURZ=2, LANG=3, WARTENAUFNAECHSTETAST
 
 #define zeit TIM7->CNT
 
-DigitalOut ird1(PA_7);
+DigitalOut ird1(PA_6);
 DigitalIn taste(PA_1);
 PortOut z(PortC,0xFF);
-InterruptIn signal(PC_8);
+InterruptIn signal(PC_9);
 lcd mylcd;
 
 int aktZustand=WARTENAUFTASTE;
@@ -56,10 +56,15 @@ void losgelassen() 	//ISR signal PC_8 steigende Flanke
         if (zeit < 200) {
             aktZustand = KURZ;
             speichern(0);
+            aktZustand = WARTENAUFNAECHSTETASTE;
+            starteZeit();
         } else if (zeit >= 200) {
             aktZustand = LANG;
             speichern(1);
+            aktZustand = WARTENAUFNAECHSTETASTE;
+            starteZeit();
         }
+
     }
 
 }
@@ -128,9 +133,11 @@ void abgelaufen(void) 	//ISR TIM7
 {
     TIM7->SR=0;
     HAL_NVIC_ClearPendingIRQ(TIM7_IRQn);
-    aktZustand = ZEICHENFERTIG;
-    ausgeben();
-
+    if (aktZustand == WARTENAUFNAECHSTETASTE){
+            aktZustand = ZEICHENFERTIG;
+        ausgeben();
+        aktZustand = WARTENAUFTASTE;
+    }
 }
 
 /* Timer init function */
@@ -144,11 +151,11 @@ void init(void)
     //TIM6 init
     RCC->APB1ENR |= 0b10000;
     TIM6->PSC = 0;
-    TIM6->ARR = 841;
+    TIM6->ARR = 420;
     TIM6->CNT = 0;
     TIM6->DIER = 1;
     TIM6->SR = 0;
-    TIM6->CR1 = 1;
+    TIM6->CR1 = 0;
 
     NVIC_SetVector(TIM6_IRQn, (uint32_t)&tim6isr);
     HAL_NVIC_EnableIRQ(TIM6_IRQn);
@@ -162,7 +169,7 @@ void init(void)
     TIM7->CNT=1000;
     TIM7->DIER=1;	 //UIE = 1 (Update Interrupt Enable)
     TIM7->SR=0;             	//UIF =0 (Update Interrupt Flag)
-    TIM7->CR1=0;
+    TIM7->CR1=1;
  
    /* TIM7_IRQn interrupt configuration */
     NVIC_SetVector(TIM7_IRQn, (uint32_t)&abgelaufen);
@@ -171,6 +178,8 @@ void init(void)
     //Display
     mylcd.clear();
     mylcd.cursorpos(0);   
+
+    aktZustand=WARTENAUFTASTE;
 }
 
 int main()
@@ -180,6 +189,7 @@ int main()
 //Hier euer Code Aufgabe 3
     
     while (true) {
+
         if (taste==1) {
             TIM6->CR1=1;
         }else {
