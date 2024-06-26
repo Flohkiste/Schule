@@ -1,0 +1,40 @@
+#include "mbed.h"
+
+
+PortOut anzeige(PortC, 0xFF);
+DigitalOut einer(PC_11), zehner(PC_12);
+AnalogIn poti(PA_0);
+int z = 0;
+Ticker myTicker;
+
+int seg7[10] = {0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F};
+
+void anzeigen(){
+
+    int punktMaske = 0b10000000;
+
+    if (einer) {
+        einer = 0;
+        anzeige = seg7[z/10];
+        anzeige = anzeige | punktMaske;
+        zehner = 1;
+    } else {
+        zehner = 0;
+        anzeige = seg7[z%10];
+        einer = 1;
+    }
+}
+
+void init(){
+    myTicker.attach(&anzeigen, 0.005);
+}
+
+int main()
+{
+
+    init();
+
+    while (true) {
+        z = poti * 33;
+    }
+}
