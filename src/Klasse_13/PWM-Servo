@@ -1,0 +1,20 @@
+/* mbed Microcontroller Library
+ * Copyright (c) 2019 ARM Limited
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include "mbed.h"
+
+PwmOut servo(PC_6);
+AnalogIn poti(PA_0);
+
+int main()
+{
+
+    servo.period_ms(200);
+
+    while (true) {
+        servo.pulsewidth_us(poti.read() * 2000 + 600);
+        thread_sleep_for(20);
+    }
+}
