@@ -1,0 +1,72 @@
+/* mbed Microcontroller Library
+ * Copyright (c) 2019 ARM Limited
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include "mbed.h"
+#include <cstdio>
+
+
+const char zahlenTab[] = {0x7e, 0x30, 0x6d, 0x79, 0x33, 0x5b, 0x5F, 0x70, 0x7f, 0x7b};
+const char segTab[] = {0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8};
+const char dotP = 0x80;
+
+SPI ea(PB_15, PB_14, PB_13);
+DigitalOut ss(PB_12);
+
+void init() {
+    ss = 1;
+    ea.format(8, 0b11);
+    ea.frequency(1000000);
+}
+
+void send_data(char adress, char number){
+    ss = 0;
+    ea.write(adress);
+    ea.write(number);
+    ss = 1;
+}
+
+void initDisplay() {
+    send_data(0x09, 0x00); // Decoding off
+  send_data(0x0A, 0x08); // Brightness to intermediate
+  send_data(0x0B, 0x07); // Scan limit = 7
+  send_data(0x0C, 0x01); // Normal operation mode
+  //    send_data(0x0F, 0x0F);        // Enable display test
+  //    ThisThread::sleep_for(500ms); // 500 ms delay
+  send_data(0x01, 0x00); // Clear row 0.
+  send_data(0x02, 0x00); // Clear row 1.
+  send_data(0x03, 0x00); // Clear row 2.
+  send_data(0x04, 0x00); // Clear row 3.
+  send_data(0x05, 0x00); // Clear row 4.
+  send_data(0x06, 0x00); // Clear row 5.
+  send_data(0x07, 0x00); // Clear row 6.
+  send_data(0x08, 0x00); // Clear row 7.
+  send_data(0x0F, 0x00); // Disable display test
+    ThisThread::sleep_for(100);          // 100 ms delay
+}
+
+
+
+
+int main()
+{
+
+    init();
+    initDisplay();
+
+    while (true) {
+        
+        send_data(segTab[7], zahlenTab[8]);
+        send_data(segTab[6], zahlenTab[7]);
+        send_data(segTab[5], zahlenTab[6]);
+        send_data(segTab[4], zahlenTab[5]);
+        send_data(segTab[3], zahlenTab[4]);
+        send_data(segTab[2], zahlenTab[3]);
+        send_data(segTab[1], zahlenTab[2]);
+        send_data(segTab[0], zahlenTab[1]);
+        
+
+
+    }
+}
