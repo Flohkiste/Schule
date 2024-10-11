@@ -2,12 +2,10 @@ package Arbeitsblatt_5_2;
 
 public class LinkedList<T>{
     Element<T> firstElement;
-    Boolean empty;
     int size;
 
     public LinkedList(){
         firstElement = null;
-        empty = true;
         size = 0;
     }
 
@@ -15,13 +13,11 @@ public class LinkedList<T>{
         Element<T> newElement = new Element<T>(value, this.firstElement);
         this.firstElement = newElement;
         size++;
-        if (empty) empty = false;
     }
 
     public void add(T value){
-        if(empty){
+        if(this.isEmpty()){
             this.firstElement = new Element<T>(value);
-            empty = false;
         }else{
             Element<T> curElement = this.firstElement;
 
@@ -44,7 +40,6 @@ public class LinkedList<T>{
 
         curElement.setNextElement(new Element<T>(value, curElement.getNextElement()));
         size++;
-        if (empty) empty = false;
     }
 
     public Element<T> removeFirst(){
@@ -53,7 +48,6 @@ public class LinkedList<T>{
         if (size == 1){
             this.firstElement = null;
             size = 0;
-            empty = true;
             return removedElement;
         }
 
@@ -69,7 +63,6 @@ public class LinkedList<T>{
             removedElement = this.firstElement;
             this.firstElement = null;
             size = 0;
-            empty = true;
             return removedElement;
         }
 
@@ -104,7 +97,6 @@ public class LinkedList<T>{
 
         curElement.setNextElement(curElement.getNextElement().getNextElement());
         size--;
-        if (size == 0) empty = true;
         
         return removedElement;
     }
@@ -123,7 +115,11 @@ public class LinkedList<T>{
     }
 
     public Boolean isEmpty(){
-        return empty;
+        if (this.firstElement == null) {
+            return true;
+        }
+
+        return false;
     }
 
     public int length(){
