@@ -2,17 +2,14 @@ package Arbeitsblatt_5_2;
 
 public class LinkedList<T>{
     Element<T> firstElement;
-    int size;
 
     public LinkedList(){
         firstElement = null;
-        size = 0;
     }
 
     public void addFirst(T value){
         Element<T> newElement = new Element<T>(value, this.firstElement);
         this.firstElement = newElement;
-        size++;
     }
 
     public void add(T value){
@@ -28,7 +25,6 @@ public class LinkedList<T>{
             curElement.setNextElement(new Element<T>(value));
         }
 
-        size++;
     }
 
     public void add(T value, int pos){
@@ -39,43 +35,38 @@ public class LinkedList<T>{
         }
 
         curElement.setNextElement(new Element<T>(value, curElement.getNextElement()));
-        size++;
     }
 
     public Element<T> removeFirst(){
         Element<T> removedElement = this.firstElement;
 
-        if (size == 1){
+        if (length() == 1){
             this.firstElement = null;
-            size = 0;
             return removedElement;
         }
 
         this.firstElement = this.firstElement.getNextElement();
-        size--;
         return removedElement;
     }
 
     public Element<T> removeLast(){
         Element<T> removedElement;
 
-        if (size == 1){
+        if (length() == 1){
             removedElement = this.firstElement;
             this.firstElement = null;
-            size = 0;
             return removedElement;
         }
 
         Element<T> curElement = this.firstElement;
 
-        for(int i = 0; i < size - 2; i++){
+        for(int i = 0; i < length() - 2; i++){
             curElement = curElement.getNextElement();
         }
 
         removedElement = curElement.getNextElement();
 
         curElement.setNextElement(null);
-        size--;
 
         return removedElement;
     }
@@ -96,7 +87,6 @@ public class LinkedList<T>{
         removedElement = curElement.getNextElement();
 
         curElement.setNextElement(curElement.getNextElement().getNextElement());
-        size--;
         
         return removedElement;
     }
@@ -123,7 +113,19 @@ public class LinkedList<T>{
     }
 
     public int length(){
-        return this.size;
+        if (this.isEmpty()){
+            return 0;
+        }
+
+        int x = 1;
+        Element curElement = this.firstElement;
+
+        while(curElement.getNextElement() != null) {
+            curElement = curElement.getNextElement();
+            x ++;
+        }
+
+        return x;
     }
 
 }
