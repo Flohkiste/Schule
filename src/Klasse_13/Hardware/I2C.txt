@@ -1,0 +1,44 @@
+#include "mbed.h"
+#include "lcd.h"
+
+#define sleep ThisThread::sleep_for
+#define ADDR_MCP23008 0x40
+
+I2C i2c(I2C_SDA, I2C_SCL); 
+
+lcd  mylcd;
+
+void mcp23008_init() {
+
+  char daten[] = {0x00, 0x00};
+
+  i2c.write(ADDR_MCP23008, daten, 2);
+
+}
+
+void mcp23008_output(char value) {
+
+  char daten[] = {0x09, 0x00};
+  daten[1] = value;
+  i2c.write(ADDR_MCP23008, daten, 2);
+
+
+}
+
+int main() {
+  mylcd.clear();
+  mylcd.printf("Bitmuster");
+  mcp23008_init();
+
+  
+
+  while (true) {
+    
+    for (int i = 0; i < 8; i++) {
+        char bitmuster = 0x01 << i;
+        mcp23008_output(bitmuster);
+        sleep(200);
+    }
+
+  }
+}
