@@ -28,11 +28,7 @@ public class LinkedList<T>{
     }
 
     public void add(T value, int pos){
-        Element<T> curElement = this.firstElement;
-
-        for(int i = 0; i < pos - 1; i++){
-            curElement = curElement.getNextElement();
-        }
+        Element<T> curElement = this.getElement(pos - 1);
 
         curElement.setNextElement(new Element<T>(value, curElement.getNextElement()));
     }
@@ -58,11 +54,7 @@ public class LinkedList<T>{
             return removedElement;
         }
 
-        Element<T> curElement = this.firstElement;
-
-        for(int i = 0; i < length() - 2; i++){
-            curElement = curElement.getNextElement();
-        }
+        Element<T> curElement = this.getElement(length() - 2);
 
         removedElement = curElement.getNextElement();
 
@@ -78,11 +70,7 @@ public class LinkedList<T>{
             return removeFirst();
         }
 
-        Element<T> curElement = this.firstElement;
-
-        for(int i = 0; i < pos - 1; i++){
-            curElement = curElement.getNextElement();
-        }
+        Element<T> curElement = this.getElement(pos - 1);
 
         removedElement = curElement.getNextElement();
 
@@ -126,6 +114,31 @@ public class LinkedList<T>{
         }
 
         return x;
+    }
+
+    public Element getElement(int index) {
+
+        if (this.isEmpty()){
+            return null;
+        }
+
+        Element<T> curElement = this.firstElement;
+
+        for(int i = 0; i < index; i++){
+            curElement = curElement.getNextElement();
+        }
+
+        return curElement;
+    }
+
+    public T getValue(int index) {
+        Element element = getElement(index);
+
+        if (element == null) {
+            return null;
+        }
+        
+        return (T) getElement(index).getValue();
     }
 
 }

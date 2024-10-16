@@ -11,5 +11,16 @@ public class Steuerung {
 
         list.remove(1);
         list.print();
+        list.removeFirst();
+
+        list.print();
+
+        for (int x = 1; x <= 10; x++) {
+            list.add(x);
+        }
+
+        for (int x = 0; x < list.length(); x++) {
+            System.out.println(list.getValue(x));
+        }
     }
 }
