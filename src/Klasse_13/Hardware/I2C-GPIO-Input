@@ -1,0 +1,54 @@
+#include "TextLCD_I2C.h"
+#include "mbed.h"
+#include <cstdio>
+
+#define sleep ThisThread::sleep_for
+#define ADDR_MCP23008 0x20 // 0x20<<1 --> 0x40 IO-Expander
+
+I2C i2c(I2C_SDA, I2C_SCL); // PB_9, PB_8
+
+TextLCD_I2C lcd(&i2c, 0x27 << 1, TextLCD_I2C::LCD16x2);
+
+char data = 0x01;
+
+void mcp23008_init() {
+    char data_write[] = {0x00, 0xFF}; // IODIR all inputs
+    i2c.write(ADDR_MCP23008 << 1, data_write, 2);
+}
+
+void mcp23008_output(char value) {
+    char daten[] = {0x09, 0x00};
+    daten[1] = value;
+    i2c.write(ADDR_MCP23008 << 1, daten, 2, false);
+}
+
+char mcp23008_input(){
+    char daten[] = {0x09};
+    i2c.write(ADDR_MCP23008 << 1, daten, 1, true);
+    i2c.read(ADDR_MCP23008 << 1, daten, 1, false);
+
+    return daten[0];
+}
+
+void lcd_output(char daten){
+
+    if(daten == data){
+        return;
+    }
+
+    data = daten;
+
+    lcd.cls();
+    lcd.printf("Value: %i", daten);
+}
+
+
+int main() {
+    char bitmuster = 0x01;
+    lcd.setBackLight(true);
+    lcd_output(0x00);
+    mcp23008_init();
+    while (true) {
+        lcd_output(mcp23008_input());
+    }
+}
