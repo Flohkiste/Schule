@@ -22,7 +22,7 @@ int main() {
   while (true) {
   
 	int value = mcp3221_read();
-    float spg = ((float) value / 4095) * 3.3;
+    float spg = ((float) value / 4095) * 5;
 
 
     lcd.locate(0, 0);
