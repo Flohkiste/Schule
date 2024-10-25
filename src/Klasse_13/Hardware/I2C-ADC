@@ -1,0 +1,36 @@
+#include "mbed.h"
+#include "TextLCD_I2C.h"
+
+#define sleep ThisThread::sleep_for
+#define ADDR_MCP3221 0x4D//hier Adresse eingeben // 7-Bit: 0x4D     8-Bit:      DAC/ADC
+
+I2C i2c(I2C_SDA, I2C_SCL); // PB_9, PB_8
+TextLCD_I2C lcd(&i2c, 0x27 << 1, TextLCD_I2C::LCD16x2);
+
+int mcp3221_read() {
+  
+	char data[] = {0x00, 0x00};
+    i2c.read(ADDR_MCP3221 << 1, data, 2);
+
+    int value = (int) (data[0] << 8) + (int) data[1];
+
+    return value;
+}
+
+int main() {
+  lcd.setBackLight(true);
+  while (true) {
+  
+	int value = mcp3221_read();
+    float spg = ((float) value / 4095) * 5;
+
+
+    lcd.locate(0, 0);
+    lcd.printf("ADC-Value: %03X", value);
+    lcd.locate(0, 1);
+    lcd.printf("Voltage: %4.2fV", spg);
+    printf("Voltage: %4.2fV\n", spg);
+
+    sleep(1s);
+  }
+}

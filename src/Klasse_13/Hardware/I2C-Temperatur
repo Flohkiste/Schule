@@ -1,0 +1,60 @@
+
+#include "TextLCD_I2C.h"
+#include "mbed.h"
+
+#define sleep ThisThread::sleep_for
+#define ADDR_MCP9800 0x49 // 0x49<<1 --> 0x92  Temperatur Sensor
+
+I2C i2c(I2C_SDA, I2C_SCL); // PB_9, PB_8
+
+TextLCD_I2C lcd(&i2c, 0x27 << 1, TextLCD_I2C::LCD16x2);
+
+float temp = 0;
+
+void temperatur_init() {
+  // One-shot disabled
+  // 9 Bit resolution
+  // default fault queue
+  // alert active-high (open drain output)
+  // comparator mode
+  // shutdown disabled
+  char data_write[] = {0x01, 0b00100100};
+  i2c.write(ADDR_MCP9800 << 1, data_write, 2);
+}
+
+float temperatur_read() {
+    float temperatur;
+    float msb, lsb;
+
+    char data[] = {0x00, 0x00};
+    i2c.write(ADDR_MCP9800 << 1, data, 1, true);
+    i2c.read(ADDR_MCP9800 << 1, data, 2, false);
+    msb = (float) data[0];
+    lsb = (float) data[1];
+
+    temperatur = msb + (lsb / 256);
+
+    temp = temperatur;
+  
+    return temperatur;
+}
+
+int main() {
+  lcd.setBackLight(true);
+  lcd.locate(0, 0);
+  lcd.printf("Temperatur");
+
+  temperatur_init();
+
+  while (true) {
+
+	//hier dein Code, Temperatur auslesen 
+    float temperatur = temperatur_read();
+
+    lcd.locate(0, 1);
+    lcd.printf("%3.2f C", temperatur);
+    printf("%3.2f C\n", temp);
+    sleep(1s);
+  }
+}
+
