@@ -24,4 +24,12 @@ public class Queue<T> {
     public int length() {
         return list.length();
     }
+
+    public void print() {
+        list.print();
+    }
+
+    public T first(){
+        return (T) list.getElement(0).getValue();
+    }
 }

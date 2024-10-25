@@ -62,6 +62,29 @@ public class Steuerung {
     }
 
     public static void outputQueue(){
+            System.out.println("Queue");
 
+            Queue<Double> queue = new Queue<Double>();
+
+            for(double x = 1; x < 5; x++) {
+                queue.enqueue(x);
+            }
+
+            System.out.println("Erledigt");
+
+            System.out.println("Gib das erste Element aus und lösche es gleichzeitig");
+            System.out.println(queue.dequeue());
+
+            System.out.println("Gib das erste Element aus und lösche es gleichzeitig");
+            System.out.println(queue.dequeue());
+
+            System.out.println("Gib das erste Element aus und lösche es gleichzeitig");
+            System.out.println(queue.dequeue());
+
+            System.out.println("Gib das erste Element aus und lösche es gleichzeitig");
+            System.out.println(queue.dequeue());
+
+            System.out.println("Ist die Queue leer?");
+            System.out.println(queue.isEmpty());
     }
 }
