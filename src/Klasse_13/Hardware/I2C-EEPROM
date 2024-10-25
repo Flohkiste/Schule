@@ -1,0 +1,50 @@
+#include "mbed.h"
+#include "TextLCD_I2C.h"
+
+#define sleep ThisThread::sleep_for
+#define ADDR_24C02 0x50    //hier Adresse  // 7-Bit:        8-Bit:       EEPROM
+
+I2C i2c(I2C_SDA, I2C_SCL); // PB_9, PB_8
+TextLCD_I2C lcd(&i2c, 0x27 << 1, TextLCD_I2C::LCD16x2);
+
+int eeprom_read(int adr) {
+  
+	char data[] = {(char) adr};
+    i2c.write(ADDR_24C02 << 1, data, 1, true);
+    i2c.read(ADDR_24C02 << 1, data, 1, false);
+
+    return (int) data[0];
+}
+
+void eeprom_write(int adr, int data) {
+  
+	char data_write[] = {(char) adr, (char) data};
+    i2c.write(ADDR_24C02 << 1, data_write, 2);
+
+}
+
+int main() {
+  lcd.setBackLight(true);
+  lcd.locate(0,0);
+
+  int num = 10;
+
+  for(int i = 0; i < num; i++) {
+    eeprom_write(i, i);
+    sleep(10ms);
+  }
+
+  for(int i = 0; i < num; i++) {
+
+      if (i == num / 2){
+          lcd.locate(0, 1);
+      }
+
+    int val = eeprom_read(i);
+    printf(" %02X ", val);
+    lcd.printf("%02i ", val);
+  }
+  printf("\n");
+
+  while (true) { }
+}
