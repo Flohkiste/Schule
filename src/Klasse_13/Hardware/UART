@@ -1,0 +1,37 @@
+#include "mbed.h"
+
+
+int main(void) {
+    BufferedSerial serial_port(USBTX, USBRX);
+    //BufferedSerial serial_port(PB_10, PB_11);
+    DigitalOut led0(PC_0,0), led1(PC_1,0), led2(PC_2,0), led3(PC_3,0);
+
+    char c;
+
+    while (true) {
+
+
+        if (serial_port.readable()) {
+            serial_port.read(&c, 1);
+
+            switch (c) {
+                case 'A':
+                    led0 = !led0;
+                    break;
+                case 'B':
+                    led1 = !led1;
+                    break;    
+                case 'C':
+                    led2 = !led2;
+                    break;   
+                case 'D':
+                    led3 = !led3;
+                    break;                      
+            }
+
+            serial_port.write(&c, 1);
+        }
+
+    }
+}
+
