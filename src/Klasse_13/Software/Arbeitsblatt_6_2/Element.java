@@ -57,25 +57,80 @@ public class Element {
 
     }
 
-    public void getDataInorder() {
-        if (leftSubtree != null) leftSubtree.getDataInorder();
-        System.out.print(" " + this.value + " ");
-        if (rightSubtree != null) rightSubtree.getDataInorder();
+    public String getDataInorder() {
+        String result = "";
+        if (leftSubtree != null) result = result + leftSubtree.getDataInorder();
+        result = result + this.value + "  ";
+        if (rightSubtree != null) result = result + leftSubtree.getDataInorder();
+
+        return result;
     }
 
-    public void getDataPreorder() {
-        System.out.print(" " + this.value + " ");
-        if (leftSubtree != null) leftSubtree.getDataPreorder();
-        if (rightSubtree != null) rightSubtree.getDataPreorder();
+    public String getDataPreorder() {
+        String result = "";
+        result = result + this.value;        
+        if (leftSubtree != null) result = result + leftSubtree.getDataPreorder();
+        if (rightSubtree != null) result = result + leftSubtree.getDataPreorder();
+
+        return result;
     }
 
-    public void getDataPostorder() {
-        if (leftSubtree != null) leftSubtree.getDataPostorder();
-        if (rightSubtree != null) rightSubtree.getDataPostorder();
-        System.out.print(" " + this.value + " ");
+    public String getDataPostorder() {
+        String result = "";
+        if (leftSubtree != null) result = result + leftSubtree.getDataPostorder();
+        if (rightSubtree != null) result = result + leftSubtree.getDataPostorder();
+        result = result + this.value;
+
+        return result;
     }
 
     public void testOutput_2D() {
+
+    }
+
+    public void del(int num) {
+        if (this.value != num) {
+            if (this.rightSubtree != null) {
+                this.rightSubtree.del(num);
+            }
+
+            if (this.leftSubtree != null) {
+                this.leftSubtree.del(num);
+            }
+            
+            return;
+        }
+
+        if (this.rightSubtree != null) {
+
+            if (this.rightSubtree.value != num) {
+                return;
+            }
+
+            if (this.rightSubtree.isEnd()) {                    
+                    this.rightSubtree = null;      
+                    return;                              
+
+            } else if ((this.rightSubtree.rightSubtree != null | this.rightSubtree.leftSubtree != null) && !(this.rightSubtree.rightSubtree == null && this.rightSubtree.leftSubtree == null)){
+
+                if (this.rightSubtree.rightSubtree != null) {
+                    this.rightSubtree = this.rightSubtree.rightSubtree;
+                }
+                if (this.rightSubtree.leftSubtree != null) {
+                    this.rightSubtree = this.rightSubtree.leftSubtree;
+                }
+            }
+            
+        }
+
+
+    }
+
+    private void delOneSubTree(int num) {
+
+    }
+
+    private void delInnerElement(int num) {
 
     }
 }
